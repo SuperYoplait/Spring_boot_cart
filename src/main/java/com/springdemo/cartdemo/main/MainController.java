@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String index(/*@CurrentUser Account account,*/ Model model) {
-
-        /* if(account != null){
-            model.addAttribute(account);
-        } */
+    public String index() {
         return "index";
     }
 }
