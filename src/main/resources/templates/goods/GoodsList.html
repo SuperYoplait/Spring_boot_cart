@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 리스트</title>
+</head>
+<body>
+    <div class="container">
+        <hr class="my-4">
+        <form class="row g-3" th:action="@{/goods/search}" method="get">
+            <div>
+                <label for="goods_serch">상품 검색</label>
+                <input type="text" id="goods_serch" placeholder="상품명 검색" name="goods_serch">
+                <!-- required th:value="${userid}" -->
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary mb-3">검색</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
