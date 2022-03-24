@@ -25,11 +25,11 @@ public class GoodsController {
     public String Goods_Detail(Model model, @RequestParam(required = false) Long id ){
         goodsService.detailProcess(model, id);
         return "";
-        //
     }
 
     @GetMapping("/goods-add")
-    public String Goods_Add(){
+    public String Goods_Add(Model model, @RequestParam(required = false) Long id){
+        goodsService.detailProcess(model, id);
         return "goods/GoodsAdd";
     }
 
