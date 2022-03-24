@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/goods")
 @RequiredArgsConstructor
 public class GoodsController {
