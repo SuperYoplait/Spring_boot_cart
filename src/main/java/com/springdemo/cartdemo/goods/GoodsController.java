@@ -19,7 +19,7 @@ public class GoodsController {
 
     @GetMapping("/goods-add")
     public String Goods_Add(){
-        return "";
+        return "goods/GoodsAdd";
     }
 
     @GetMapping("/goods-delete")

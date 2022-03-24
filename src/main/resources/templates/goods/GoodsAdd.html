@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+</html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 추가</title>
+</head>
+
+<header th:replace="fragments/cm_top.html"></header>
+
+<body>
+    <h3>상품 등록</h3>
+
+    <div class="container">
+        <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="needs-validation" method="post">
+            <input class="form-control" type="hidden" th:field="*{id}">
+            <hr class="my-4">
+            <h4 class="mb-5">상품 추가</h4>
+
+            <div class="row mb-3">
+                <label for="TitleField" class="form-label">상품명</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{TitleField}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('TitleField')}"
+                    th:errors="*{TitleField}">Title error</small>
+
+                <label for="useridField" class="form-label">작성자</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{useridField}">
+            </div>
+
+            <div class="row mb-3">
+                <label for="TextField" class="form-label">내용</label>
+                <textarea th:field="*{TextField}" class="form-control" rows="10"></textarea>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('TextField')}"
+                    th:errors="*{TextField}">Text error</small>
+            </div>
+
+            <div class="row mb-3">
+                <label for="PasswordField" class="form-label">비밀번호</label>
+                <input class="form-control" type="password" name="" id="" th:field="*{PasswordField}">
+                <small th:if="${#fields.hasErrors('PasswordField')}" th:errors="*{PasswordField}">Password error</small>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
+                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/test/list'">취소</button>
+            </div>
+        </form>
+</body>
+</html>
