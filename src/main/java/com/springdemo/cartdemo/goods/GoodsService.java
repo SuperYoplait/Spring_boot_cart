@@ -20,10 +20,10 @@ public class GoodsService {
             if (goods.isPresent()) {
                 GoodsForm goodsForm = GoodsForm.builder()
                         .id(goods.get().getId())
-                        .name(goods.get().getname())
-                        .context(goods.get().getcontext())
-                        .price(goods.get().getprice())
-                        .image(goods.get().getimage())
+                        .name(goods.get().getName())
+                        .context(goods.get().getContext())
+                        .price(goods.get().getPrice())
+                        .image(goods.get().getImage())
                         .build();
 
                 model.addAttribute("GoodsForm", goodsForm);
