@@ -15,35 +15,38 @@
 
 <body>
     <div class="container">
-        <form action="" th:object="${consultForm}" class="needs-validation" method="post">
+        <form action="" th:object="${goodsForm}" class="needs-validation" method="post">
             <input class="form-control" type="hidden" th:field="*{id}">
             <hr class="my-4">
-            <h4 class="mb-5">상담글</h4>
-            
+            <h4 class="mb-5">상품 상세보기</h4>
+
             <hr class="my-4">
 
             <div class="row mb-3">
-                <label for="consultTitle" class="form-label">상품이름</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{consultTitle}">
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('consultTitle')}" th:errors="*{consultTitle}">Title error</small>
-                
-                <label for="consultTitle" class="form-label">작성자</label>
-                <input class="form-control"  type="text" name="" id="" th:field="*{userid}">
+                <label for="goodsname" class="form-label">상품이름</label>
+                <input class="form-control" type="text" name="" id="" th:field="*{name}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Title
+                    error</small>
+                < <label for="price" class="form-label">가격</label>
+                    <input class="form-control" type="text" name="" id="" th:field="*{price}">
             </div>
-            
+
             <div class="row mb-3">
-                <label for="consultText" class="form-label">상담 내용</label>
-                <textarea th:field="*{consultText}" class="form-control" rows="10"></textarea>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('consultText')}" th:errors="*{consultText}">Text error</small>
+                <label for="context" class="form-label">상품내역</label>
+                <textarea th:field="*{context}" class="form-control" rows="10"></textarea>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('context')}" th:errors="*{context}">Text
+                    error</small>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">구매</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-danger btn-lg btn-block" type="button" onclick="history.go(-1)">뒤로가기</button>
+                </div>
             </div>
 
-            <div class="col-12">
-                    <button class="btn btn-success btn-lg btn-block" type="button"">답변</button>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
-                    <button class="btn btn-danger btn-lg btn-block" type="button" onclick="history.go(-1)">취소</button>
-            </div>
 
-            
         </form>
 
     </div>
