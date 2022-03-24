@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 </html>
@@ -25,16 +23,13 @@
 
             <div class="row mb-3">
                 <label for="TitleField" class="form-label">상품명</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{TitleField}">
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('TitleField')}"
+                <input class="form-control" type="text" name="" id="" th:field="*{name}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
                     th:errors="*{TitleField}">Title error</small>
-
-                <label for="useridField" class="form-label">작성자</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{useridField}">
             </div>
 
             <div class="row mb-3">
-                <label for="TextField" class="form-label">내용</label>
+                <label for="TextField" class="form-label">상품 설명</label>
                 <textarea th:field="*{TextField}" class="form-control" rows="10"></textarea>
                 <small class="form-text text-danger" th:if="${#fields.hasErrors('TextField')}"
                     th:errors="*{TextField}">Text error</small>

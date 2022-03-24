@@ -21,10 +21,12 @@ public class GoodsForm {
     @Length(min = 5, max = 400)
     private String name;
 
-    private Long price;
-
     @Length(min = 5)
     private String context;
+    
+    private Long price;
+
+    
 
     private String image;
 
