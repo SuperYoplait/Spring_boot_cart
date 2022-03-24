@@ -1,31 +1,29 @@
-package com.springdemo.cartdemo.cart;
+package com.springdemo.cartdemo.account;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "CART")
-@Builder
-@AllArgsConstructor
+@Data
+@Entity(name = "ROLE")
 @NoArgsConstructor
-public class Cart {
+@AllArgsConstructor
+@Builder
+public class Role{
+
     @Id
     @GeneratedValue
     private Long id;
 
     @Column
-    private Long account_id; //회원 번호
+    private String role_name;
 
-    @Column
-    private Long goods_id; //상품 번호
-
-    @Column
-    private Long count; //상품 수량
+    @Column(unique = true)
+    private String authority;
 }
