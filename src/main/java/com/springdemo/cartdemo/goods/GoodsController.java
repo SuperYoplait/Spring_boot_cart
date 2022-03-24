@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/goods")
 @RequiredArgsConstructor
 public class GoodsController {
@@ -29,7 +30,7 @@ public class GoodsController {
 
     @GetMapping("/goods-add")
     public String Goods_Add(){
-        return "";
+        return "goods/GoodsAdd";
     }
 
     @GetMapping("/goods-delete")

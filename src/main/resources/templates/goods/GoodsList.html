@@ -15,17 +15,103 @@
 
 <body>
     <div class="container">
-        <hr class="my-4">
-        <form class="row g-3" th:action="@{/goods/search}" method="get">
+       <!-- <hr class="my-4"> -->
+        <form class="row g-3" th:action="@{/goods/list}" method="get">
             <div>
                 <label for="goods_serch">상품 검색</label>
                 <input type="text" id="goods_serch" placeholder="상품명 검색" name="goods_serch">
-                <!-- required th:value="${userid}" -->
             </div>
             <div>
                 <button type="submit" class="btn btn-primary mb-3">검색</button>
             </div>
         </form>
+
+        <div class="d-flex align-content-start flex-wrap">
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    과일/견과
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    채소
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    우유/유제품
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    라면/간편식
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    생수/음료/커피
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    장/조미료
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    과자/빵/빙과
+                </a>
+            </div>
+            <div class="p-2">
+                <a href="#" style="color: black">
+                    유아동/완구
+                </a>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://shop-phinf.pstatic.net/20210820_195/1629421746657cs0mq_JPEG/0025353682_0_600_20210623112801.jpg?type=f450"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">9,980원</h5>
+                        <p class="card-text">해찬들 우리쌀 매운 태양초 골드 고추장, 1.8kg</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://shop-phinf.pstatic.net/20210820_195/1629421746657cs0mq_JPEG/0025353682_0_600_20210623112801.jpg?type=f450"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">8,580원</h5>
+                        <p class="card-text">씨제이 다담 된장찌개 양념, 840g(4인기준/11회분)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://shop-phinf.pstatic.net/20210820_195/1629421746657cs0mq_JPEG/0025353682_0_600_20210623112801.jpg?type=f450"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">4,980원</h5>
+                        <p class="card-text">요리요정 볶음조림소스, 420ml</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="https://shop-phinf.pstatic.net/20210820_195/1629421746657cs0mq_JPEG/0025353682_0_600_20210623112801.jpg?type=f450"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">1,980원</h5>
+                        <p class="card-text">오뚜기 이금기 팬더 굴소스, 255g</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
 
