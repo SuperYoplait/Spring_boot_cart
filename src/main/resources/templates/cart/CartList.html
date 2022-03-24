@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
@@ -12,25 +14,42 @@
 
 <body>
     <div>
-        <table class="table caption-top">
-            <thead>
-                <tr>
-                    <th scope="col">상품정보</th>
-                    <th scope="col">수량</th>
-                    <th scope="col">단가</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{goodsname}}</td>
-                    <td>
-                        {{goodscount}}
-                    </td>
-                    <td>{{unitprice}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <form th:action="@{/payment/pay}" th:object="${payForm}" class="needs-validation" method="post">
+            <table class="table caption-top">
+                <thead>
+                    <tr>
+                        <th scope="col">상품정보</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">단가</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{goodsname}}</td>
+                        <td>
+                            {{goodscount}}
+                        </td>
+                        <td>{{unitprice}}</td>
+                    </tr>
+                </tbody>
+            </table>
     </div>
-    <button>결제</button>
+
+
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class="col order-5">
+
+        </div>
+        <div class="col order-1">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">결제</button>
+        </div>
+    </div>
+
+
+    </form>
 </body>
+
 </html>

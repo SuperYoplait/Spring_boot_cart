@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>결제 페이지</title>
 </head>
+
+
+<header th:replace="fragments/cm_top.html"></header>
+
 <body>
+
+    <div class = "container">
+    
+ 
+        <div class = "py-5 text-center" th:if="${error != null}">
+            <p class="lead">장봐요</p>
+            
+            <p class="lead">결제가 완료되었습니다.</p>
+        </div>    
+
+        <div class = "py-5 text-center" th:if="${error == null}">
+            <p class="lead">장봐요</p>
+            <h2>결제가 완료되지 않았습니다.</h2>
+
+            <div>
+            <a class="btn btn-outline-info" th:href="@{/}">
+                홈으로 돌아가기
+            </a>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>

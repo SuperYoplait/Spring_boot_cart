@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
-    @PostMapping("/")
+    @PostMapping("/pay")
     public String Payment(){
-        return "";
+        return "payment/Payment";
     }
 }
