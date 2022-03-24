@@ -25,6 +25,7 @@ public class GoodsController {
     public String Goods_Detail(Model model, @RequestParam(required = false) Long id ){
         goodsService.detailProcess(model, id);
         return "";
+        //
     }
 
     @GetMapping("/goods-add")
