@@ -39,4 +39,5 @@ public class Goods {
 
     @Column
     private String count; //남은 수량
+
 }

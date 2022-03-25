@@ -14,40 +14,76 @@
 
 <body>
     <div class="container">
-        <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="needs-validation" method="post">
-            <input class="form-control" type="hidden" th:field="*{id}">
-            <h4 class="mb-5">상품 추가</h4>
-
-            <div class="row mb-3">
-                <label for="name" class="form-label">상품명</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{name}">
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
-                    th:errors="*{name}">Name error</small>
+        <main>
+            <div class="py-5 text-center">
+                <img class="d-block mx-auto mb-4" src="/img/cart_img.png" alt="" width="72" height="57">
+                <h2>Cart-Demo 상품등록</h2>
+                <p class="lead">상품을 등록하는 페이지 입니다. 모든 항목을 확인한 후 등록을 눌러주세요!</p>
             </div>
 
-            <div class="row mb-3">
-                <label for="context" class="form-label">상품 설명</label>
-                <textarea th:field="*{context}" class="form-control" rows="10"></textarea>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('context')}"
-                    th:errors="*{context}">Context error</small>
-            </div>
+            <div class="col-md-7 col-lg-8">
+                <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="form-horizontal" method="post">
+                    <input class="form-control" type="hidden" th:field="*{id}">
 
-            <div class="row mb-3">
-                <label for="price" class="form-label">가격</label>
-                <input class="form-control" type="text" name="" id="" th:field="*{price}">
-                <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}">price error</small>
-            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="name" class="form-label">상품명</label>
+                            <input class="form-control" type="text" name="" id="" th:field="*{name}">
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
+                                th:errors="*{name}">Name error</small>
 
-            <div class="row mb-3">
-                <label for="image" class="form-label">상품 이미지</label>
-                <input class="form-control" type="image" name="" id="" th:field="*{image}">
-                <small th:if="${#fields.hasErrors('image')}" th:errors="*{image}"> error</small>
-            </div>
+                            <label for="context" class="form-label">상품 설명</label>
+                            <textarea th:field="*{context}" class="form-control" rows="20"></textarea>
+                            <small class="form-text text-danger" th:if="${#fields.hasErrors('context')}"
+                                th:errors="*{context}">Context error</small>
+                        </div>
 
-            <div class="col-12">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">작성</button>
-                <button class="btn btn-danger btn-lg btn-block" type="button" onclick="href='/goods/list'">취소</button>
+                        <hr class="my-4">
+
+                        <div class="col-12">
+                            <label for="price" class="form-label">가격
+                                <input class="form-control" type="number" name="" id="" th:field="*{price}">
+                            </label>
+                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}">price
+                                error</small>
+
+                            <label for="count" class="form-label">남은 수량
+                                <input class="form-control" type="number" name="" id="" th:field="*{count}">
+                            </label>
+                            <small th:if="${#fields.hasErrors('count')}" th:errors="*{count}">count
+                                error</small>
+                        </div>
+
+                        <div class="col-12">
+                             <div class="form-check">
+                                <input type="checkbox" th:field="*{sold}" class="form-check-input">
+                                <label for="sold" class="form-check-label">현재 판매 가능</label>
+                            </div>
+                            
+                            <div>
+                                <label for="image">상품 이미지 : </label>
+                                <input type="file" name="" id="" th:field="*{image}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-lg"> 등록 </button>
+                        <input type="button" class="btn btn-secondary btn-lg" onclick="location.href='/goods/list'" value="취소">
+                    </div>
+                </form>
+
             </div>
-        </form>
+        </main>
+    </div>
 </body>
+
 </html>
+
+<script>
+    function check_Click(){
+
+    }
+</script>
