@@ -47,7 +47,8 @@ public class GoodsController {
     @GetMapping("/detail")
     public String Goods_Detail(Model model, @RequestParam(required = false) Long id) {
         goodsService.detailProcess(model, id);
-        return "";
+        model.addAttribute("title", "상품명");
+        return "goods/GoodsDetail";
     }
 
     @GetMapping("/goods-add")
