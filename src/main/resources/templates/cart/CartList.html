@@ -13,43 +13,51 @@
 <header th:replace="fragments/cm_top.html"></header>
 
 <body>
-    <div>
+    <div class="container">
         <form th:action="@{/payment/pay}" th:object="${payForm}" class="needs-validation" method="post">
-            <table class="table caption-top">
+            <!--<span th:if="${list.TotalElements < 1 }">장바구니에 담긴 상품이 없습니다.</span>-->
+            
+            <!--<table th:if="${list.TotalElements > 0 }" class="table caption-top"> -->
+            <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">상품선택</th>
                         <th scope="col">상품정보</th>
+                        <th scope="col">상품이름</th>
                         <th scope="col">수량</th>
-                        <th scope="col">단가</th>
+                        <th scope="col">가격</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr>
-                        <td>{{goodsname}}</td>
                         <td>
-                            {{goodscount}}
+                            <input type="checkbox" name="goods_select">
                         </td>
-                        <td>{{unitprice}}</td>
+                        <td>goods info</td>
+                        <td>goods name</td>
+                        <td>
+                            <input type="number" value="1" min="1" max="10">
+                        </td>
+                        <td>goods price</td>
                     </tr>
                 </tbody>
             </table>
+
+            <div>
+                <button class="btn btn-secondary btn float-right" type="submit">결제</button>
+            </div>
+        </form>
     </div>
-
-
-    <div class="row">
-        <div class="col">
-
-        </div>
-        <div class="col order-5">
-
-        </div>
-        <div class="col order-1">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">결제</button>
-        </div>
-    </div>
-
-
-    </form>
 </body>
 
 </html>
+
+<!--  class="btn btn-secondary"
+                    <tr th:each=" row : ${list}" th:onclick="'javascript: detail('+ ${row.id}+')'">
+                        <td th:text="${row.image}"></td>
+                        <td th:text="${row.name}"></td>
+                        <input type="number" value="1" min="1" max="10">
+                        <td th:text="${row.price}"></td>
+                    </tr>
+                    -->

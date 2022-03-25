@@ -13,7 +13,6 @@
 
 <body>
     <div class="container">
-        <!-- <hr class="my-4"> -->
         <form method="get">
             <div class="input-group mb-3">
                 <div>
@@ -74,19 +73,19 @@
             전체상품 : <span th:text="${list.TotalElements}"></span>
         </div>
         <div class="row row-cols-1 row-cols-md-4 g-4">
-            <span th:if="${list.TotalElements < 1 }">데이터가 없습니다.</span>
+            <span th:if="${list.TotalElements < 1 }">등록된 상품이 없습니다.</span>
 
             <div class="col">
                 <div class="card h-100">
                     <table th:if="${list.TotalElements > 0 }" class="card-body">
                         <tbody>
                             <tr th:each=" row : ${list}" th:onclick="'javascript: detail('+ ${row.id}+')'">
-                                
                                 <td th:text="${row.image}">이미지</td>
                                 <td th:text="${row.name}">상품명</td>
-                                <td th:text="${row.price}"> 가격</td>
+                                <td th:text="${row.price}">가격</td>
+                            </tr>
                         </tbody>
-                        </tr>
+                        
                     </table>
                 </div>
             </div>
