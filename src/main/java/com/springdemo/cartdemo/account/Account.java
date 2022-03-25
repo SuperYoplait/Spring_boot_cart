@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Account {
     @Id
     @GeneratedValue
-    private Long number;
+    private Long id;
 
     @Column(unique = true)
     private String userid;
