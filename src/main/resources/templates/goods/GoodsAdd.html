@@ -21,19 +21,19 @@
                 <p class="lead">상품을 등록하는 페이지 입니다. 모든 항목을 확인한 후 등록을 눌러주세요!</p>
             </div>
 
-            <div class="col-md-7 col-lg-8">
+            <div class="col-8">
                 <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="form-horizontal" method="post">
                     <input class="form-control" type="hidden" th:field="*{id}">
 
                     <div class="row">
                         <div class="col-12">
                             <label for="name" class="form-label">상품명</label>
-                            <input class="form-control" type="text" name="" id="" th:field="*{name}">
+                            <input class="form-control" type="text" name="" id="" th:field="*{name}" required>
                             <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
                                 th:errors="*{name}">Name error</small>
 
                             <label for="context" class="form-label">상품 설명</label>
-                            <textarea th:field="*{context}" class="form-control" rows="20"></textarea>
+                            <textarea th:field="*{context}" class="form-control" rows="20" required></textarea>
                             <small class="form-text text-danger" th:if="${#fields.hasErrors('context')}"
                                 th:errors="*{context}">Context error</small>
                         </div>
@@ -42,22 +42,23 @@
 
                         <div class="col-12">
                             <label for="price" class="form-label">가격
-                                <input class="form-control" type="number" name="" id="" th:field="*{price}">
+                                <input class="form-control" type="number" value="100" min="100" name="" id="" th:field="*{price}" required>
                             </label>
                             <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}">price
                                 error</small>
 
                             <label for="count" class="form-label">남은 수량
-                                <input class="form-control" type="number" name="" id="" th:field="*{count}">
+                                <input class="form-control" type="number" value="1" min="1" name="" id="" th:field="*{count}"  required>
                             </label>
-                            <small th:if="${#fields.hasErrors('count')}" th:errors="*{count}">count
+                            <small th:if="${#fields.hasErrors('count')}" th:errors="*{count}" >count
                                 error</small>
                         </div>
 
                         <div class="col-12">
-                             <div class="form-check">
-                                <input type="checkbox" th:field="*{sold}" class="form-check-input">
-                                <label for="sold" class="form-check-label">현재 판매 가능</label>
+                            <div class="form-check">
+                                <label for="sold" class="form-check-label">
+                                    <input type="checkbox" th:field="*{sold}" class="form-check-input">
+                                현재 판매 가능</label>
                             </div>
                             
                             <div>
@@ -70,8 +71,8 @@
                     <hr class="my-4">
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-lg"> 등록 </button>
-                        <input type="button" class="btn btn-secondary btn-lg" onclick="location.href='/goods/list'" value="취소">
+                        <button type="submit" class="btn btn-primary btn float-right">등록</button>
+                        <input type="button" class="btn btn-secondary btn float-right" onclick="location.href='/goods/list'" value="취소">
                     </div>
                 </form>
 
@@ -81,9 +82,3 @@
 </body>
 
 </html>
-
-<script>
-    function check_Click(){
-
-    }
-</script>

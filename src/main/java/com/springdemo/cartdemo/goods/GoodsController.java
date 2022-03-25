@@ -27,14 +27,8 @@ public class GoodsController {
     public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false, defaultValue = "") String goods) {
         Page<Goods> GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);
         
-        System.out.println("\n\n");
-        System.out.println(GoodsPagingList);
-        System.out.println("\n\n");
-        
-        int startPage = Math.max(1, (GoodsPagingList.getPageable().getPageNumber() /
-            pageable.getPageSize()) * pageable.getPageSize() + 1);
-        int endPage = Math.min(GoodsPagingList.getTotalPages(), startPage +
-            pageable.getPageSize() - 1);
+        int startPage = Math.max(1, (GoodsPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize() + 1);
+        int endPage = Math.min(GoodsPagingList.getTotalPages(), startPage + pageable.getPageSize() - 1);
         
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
