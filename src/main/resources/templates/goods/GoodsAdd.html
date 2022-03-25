@@ -12,6 +12,8 @@
 
 <header th:replace="fragments/cm_top.html"></header>
 
+
+
 <body>
     <div class="container">
         <main>
@@ -21,7 +23,10 @@
                 <p class="lead">상품을 등록하는 페이지 입니다. 모든 항목을 확인한 후 등록을 눌러주세요!</p>
             </div>
 
-            <div class="col-md-7 col-lg-8">
+          
+            <div class="col-8 m-auto">
+
+                
                 <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="form-horizontal" method="post">
                     <input class="form-control" type="hidden" th:field="*{id}">
 
@@ -76,6 +81,7 @@
                 </form>
 
             </div>
+           
         </main>
     </div>
 </body>
