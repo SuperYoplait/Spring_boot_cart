@@ -18,6 +18,14 @@
             <!--<span th:if="${list.TotalElements < 1 }">장바구니에 담긴 상품이 없습니다.</span>-->
             
             <!--<table th:if="${list.TotalElements > 0 }" class="table caption-top"> -->
+            <div>
+                <button type="button" name="goods_select">
+                    <img  src="/img/unchecked-checkbox.png" width="30" height="30" alt="">
+                </button>
+                <span>
+                    전체선택
+                </span>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -32,7 +40,9 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="checkbox" name="goods_select">
+                            <button type="button" name="goods_select" onclick="button_checkbox_click();">
+                                <img  src="/img/unchecked-checkbox.png" width="30" height="30" alt="">
+                            </button>
                         </td>
                         <td>goods info</td>
                         <td>goods name</td>
@@ -43,6 +53,11 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div>
+                <span>총 주문금액</span>
+                <span id="total-price">원</span>
+            </div>
 
             <div>
                 <button class="btn btn-secondary btn float-right" type="submit">결제</button>
@@ -61,3 +76,7 @@
                         <td th:text="${row.price}"></td>
                     </tr>
                     -->
+
+<script>
+    
+</script>

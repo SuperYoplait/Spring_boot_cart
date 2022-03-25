@@ -1,8 +1,8 @@
 package com.springdemo.cartdemo.goods;
 
-import javax.validation.constraints.NotBlank;
+//import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.Length;
+//import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
