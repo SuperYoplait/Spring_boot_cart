@@ -29,14 +29,14 @@ public class GoodsController {
     public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String goods,
             @RequestParam(required = false, defaultValue = "") String categories) {
+                
 
         Page<Goods> GoodsPagingList;
-        if (categories.equals("etc") || categories.equals("tttt")) {            
+        if (!categories.isEmpty()) {            
             GoodsPagingList = goodsRepositroy.findByCategorie(categories, pageable);
 
         } else {
-            GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);
-            
+            GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);            
         }
         int startPage = Math.max(1,
                     (GoodsPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize()
