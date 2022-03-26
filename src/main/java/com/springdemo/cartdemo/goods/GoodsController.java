@@ -1,6 +1,9 @@
 package com.springdemo.cartdemo.goods;
 
 import org.springframework.data.web.PageableDefault;
+
+import javax.validation.constraints.Null;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -24,19 +27,29 @@ public class GoodsController {
 
     @GetMapping("/list")
     public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable,
-            @RequestParam(required = false, defaultValue = "") String goods ) {
+            @RequestParam(required = false, defaultValue = "") String goods,
+            @RequestParam(required = false, defaultValue = "") String categories) {
 
-        Page<Goods> GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable); 
+        Page<Goods> GoodsPagingList;
+        if (categories.equals("etc") || categories.equals("tttt")) {            
+            GoodsPagingList = goodsRepositroy.findByCategorie(categories, pageable);
+
+        } else {
+            GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);
+            
+        }
         int startPage = Math.max(1,
-                (GoodsPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize() + 1);
-        int endPage = Math.min(GoodsPagingList.getTotalPages(), startPage + pageable.getPageSize() - 1);
+                    (GoodsPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize()
+                            + 1);
+            int endPage = Math.min(GoodsPagingList.getTotalPages(), startPage + pageable.getPageSize() - 1);
 
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("list", GoodsPagingList);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+            model.addAttribute("list", GoodsPagingList);
 
-        model.addAttribute("searchGoodsName", goods);
-        return "goods/GoodsList";
+            model.addAttribute("searchGoodsName", goods);
+            return "goods/GoodsList";
+
     }
 
     @GetMapping("/detail/{goodsId}")
