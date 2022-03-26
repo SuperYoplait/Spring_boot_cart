@@ -1,4 +1,4 @@
-/* package com.springdemo.cartdemo.config;
+package com.springdemo.cartdemo.config;
 
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 
@@ -26,9 +26,9 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception { //, "/goods/detail/", "/goods/goods-add"
         http.authorizeRequests()
-                .mvcMatchers("/").permitAll()
+                .mvcMatchers("/", "/account/sign-up", "/account/login", "/goods/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -44,10 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //resource file setting
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .mvcMatchers("/css/**")
+                .mvcMatchers("/img/**")
+                .mvcMatchers("/files/**")
                 .mvcMatchers("/node_modules/**")
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
         // 임의의 위치에 대해서 검증자체를 하지않음.
@@ -62,4 +65,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 }
- */

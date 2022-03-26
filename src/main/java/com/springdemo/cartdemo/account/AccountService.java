@@ -43,9 +43,9 @@ public class AccountService implements UserDetailsService {
             // roles.add(ROLE_USER);
 
             Account newAccount = Account.builder()
-                    .userid(AccountSignUpForm.getNickname())
+                    .userid(AccountSignUpForm.getUserid())
                     .Password(passwordEncoder.encode(AccountSignUpForm.getPassword()))
-                    .Email(AccountSignUpForm.getEmail())
+                    .email(AccountSignUpForm.getEmail())
                     //.roles(roles)
                     .build();
 
@@ -59,7 +59,6 @@ public class AccountService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
         return null;
     }
 

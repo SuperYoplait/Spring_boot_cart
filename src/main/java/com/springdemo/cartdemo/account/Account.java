@@ -31,7 +31,7 @@ public class Account {
     private String name;
 
     @Column
-    private String Email;
+    private String email;
     
     @Column
     private String Password;

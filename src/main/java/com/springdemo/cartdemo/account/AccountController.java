@@ -29,46 +29,47 @@ public class AccountController {
         webDataBinder.addValidators(AccountSignUpValidator);
     }
 
-    //회원가입
+    // 회원가입
     @GetMapping("/sign-up")
-    public String SignUp_GET(Model model){
-        model.addAttribute("AccountSignUpForm", new Account());
+    public String SignUp_GET(Model model) {
+        model.addAttribute("signUpForm", new AccountSignUpForm());
         return "account/SignUp";
     }
+
     @PostMapping("/sign-up")
-    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors){
-       
+    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors) {
         if (errors.hasErrors()) {
             return "login/sign-up";
         }
-
-        accountService.signUp(signUpForm);  
+        accountService.signUp(signUpForm);
         return "redirect:/";
     }
 
-    //로그인
+    // 로그인
     @GetMapping("/login")
-    public String Login(){
+    public String Login() {
         return "account/Login";
     }
 
-    //회원 정보 수정
+    // 회원 정보 수정
     @GetMapping("/info")
-    public String Info_Update_GET(){
+    public String Info_Update_GET() {
         return "account/Info";
     }
+
     @PostMapping("/info")
-    public String Info_Update_Post(){
+    public String Info_Update_Post() {
         return "";
     }
 
-    //회원 권한 수정
+    // 회원 권한 수정
     @GetMapping("/auth-update")
-    public String Auth_Update_GET(){
+    public String Auth_Update_GET() {
         return "account/AuthUpdate";
     }
+
     @PostMapping("/auth-update")
-    public String Auth_Update_POST(){
+    public String Auth_Update_POST() {
         return "";
     }
 
