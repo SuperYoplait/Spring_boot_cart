@@ -1,29 +1,19 @@
 package com.springdemo.cartdemo.goods;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
-//import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-
-import lombok.extern.slf4j.Slf4j;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import java.io.FileInputStream;
-import java.net.http.HttpHeaders;
-import java.nio.charset.StandardCharsets;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 //import javax.transaction.Transactional;
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 public class GoodsControllerTest {
@@ -31,23 +21,24 @@ public class GoodsControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private GoodsRepositroy goodsRepository;
+    //private GoodsRepositroy goodsRepository;
+    private WebApplicationContext webApplicationContext;
 
     @DisplayName("상품등록 - 정상")
     @Test
     void goods_insert_true() throws Exception {
-        MockMultipartFile file = new MockMultipartFile("imgFile", "test.png", "image/png",
-                new FileInputStream("/img/images.png"));
-/*
-                mockMvc.perform(
-                    .param("name", "test name")
-                    .param("context", "test context")
-                    .param("price", "10000")
-                    .param("count", "10")
-                    .param("sold", "true")
-                    .file(file).part(new MockPart("id", "foo".getBytes(StandardCharsets.UTF_8))))
-                .andExpect(status().is3xxRedirection());
-                */
+        MockMultipartFile image = new MockMultipartFile("imgFile", "imgFile.jpeg", "image/jpeg", "<<png data>>".getBytes());
+
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc.perform(
+            multipart("/upload").file(image)
+            .param("name","test name")
+            .param("context","test context")
+            .param("price","1000")
+            .param("count","10")
+            .param("sole","true")
+            )
+            .andExpect(status().isOk());
     }
     
 }
