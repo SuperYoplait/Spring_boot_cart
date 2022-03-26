@@ -41,7 +41,7 @@ public class Goods {
     private boolean sold; //판매 가능 여부
 
     @Column
-    private String count; //재고
+    private Long count; //재고
 
 
 

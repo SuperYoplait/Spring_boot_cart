@@ -15,21 +15,11 @@ import lombok.RequiredArgsConstructor;
 public class GoodsService {
     private final GoodsRepositroy goods_Repositroy;
 
-    public void detailProcess(Model model, Long id) { // 구매자 상세보기
+    public void goods_View_Process(Model model, Long id) { // 구매자 상세보기
         Optional<Goods> goods = goods_Repositroy.findById(id);
-        if (goods.isPresent()) {
-            GoodsForm goodsForm = GoodsForm.builder()
-                    .id(goods.get().getId())
-                    .name(goods.get().getName())
-                    .context(goods.get().getContext())
-                    .price(goods.get().getPrice())
-                    .imgName(goods.get().getImgName())
-                    .imgPath(goods.get().getImgPath())
-                    .build();
-
-            model.addAttribute("GoodsForm", goodsForm);
-        }
-
+        Goods view_goods = goods.get();
+        model.addAttribute("item", view_goods);
+        //return view_goods;
     }
 
     public void new_gooodsProcess(Model model, Long id) { // 판매자 상새보기
