@@ -26,6 +26,9 @@ public class Goods {
     private String name; //상품명
 
     @Column
+    private String categorie;
+
+    @Column
     private String context; //상품 설명
 
     @Column

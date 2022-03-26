@@ -23,9 +23,10 @@ public class GoodsController {
     private final GoodsService goodsService;
 
     @GetMapping("/list")
-    public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false, defaultValue = "") String goods) {
-        Page<Goods> GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);
+    public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable,
+            @RequestParam(required = false, defaultValue = "") String goods ) {
 
+        Page<Goods> GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable); 
         int startPage = Math.max(1,
                 (GoodsPagingList.getPageable().getPageNumber() / pageable.getPageSize()) * pageable.getPageSize() + 1);
         int endPage = Math.min(GoodsPagingList.getTotalPages(), startPage + pageable.getPageSize() - 1);
@@ -51,7 +52,7 @@ public class GoodsController {
     }
 
     @PostMapping("/goods-add")
-    public String Goods_Add_Post(GoodsForm goodsForm ,MultipartFile imgFile, Model model) throws Exception{
+    public String Goods_Add_Post(GoodsForm goodsForm, MultipartFile imgFile, Model model) throws Exception {
         Goods newGoods = goodsService.updateProcess(goodsForm, imgFile);
         return "redirect:/goods/detail/" + newGoods.getId();
     }
