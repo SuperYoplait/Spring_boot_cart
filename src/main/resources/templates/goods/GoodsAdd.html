@@ -27,48 +27,48 @@
             <div class="col-8 m-auto">
 
                 
-                <form th:action="@{/goods/goods-add}" th:object="${GoodsForm}" class="form-horizontal" method="post">
-                    <input class="form-control" type="hidden" th:field="*{id}">
+                <form th:action="@{/goods/goods-add}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <input class="form-control" type="hidden" name="id" id="id">
 
                     <div class="row">
                         <div class="col-12">
                             <label for="name" class="form-label">상품명</label>
-                            <input class="form-control" type="text" name="" id="" th:field="*{name}" required>
-                            <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
-                                th:errors="*{name}">Name error</small>
+                            <input class="form-control" type="text" name="name" id="name" placeholder="상품 이름을 입력하세요." required>
+                            <div class="invalid-feedback">
+                                상품명을 입력해주세요.
+                            </div>
 
                             <label for="context" class="form-label">상품 설명</label>
-                            <textarea th:field="*{context}" class="form-control" rows="20" required></textarea>
-                            <small class="form-text text-danger" th:if="${#fields.hasErrors('context')}"
-                                th:errors="*{context}">Context error</small>
+                            <textarea name="context" id="context" class="form-control" rows="10" placeholder="상품 설명을 입력하세요." required></textarea>
+                            <div class="invalid-feedback">
+                                상품설명을 입력해주세요.
+                            </div>
                         </div>
 
                         <hr class="my-4">
 
                         <div class="col-12">
                             <label for="price" class="form-label">가격
-                                <input class="form-control" type="number" value="100" min="100" name="" id="" th:field="*{price}" required>
+                                <input class="form-control" type="number" value="100" min="100" name="price" id="price" required>
                             </label>
-                            <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}">price
-                                error</small>
+                            
 
                             <label for="count" class="form-label">남은 수량
-                                <input class="form-control" type="number" value="1" min="1" name="" id="" th:field="*{count}"  required>
+                                <input class="form-control" type="number" value="1" min="1" name="count" id="count" required>
                             </label>
-                            <small th:if="${#fields.hasErrors('count')}" th:errors="*{count}" >count
-                                error</small>
+                            
                         </div>
 
                         <div class="col-12">
                             <div class="form-check">
                                 <label for="sold" class="form-check-label">
-                                    <input type="checkbox" th:field="*{sold}" class="form-check-input">
+                                    <input type="checkbox" name="sold" id="sold" class="form-check-input">
                                 현재 판매 가능</label>
                             </div>
                             
-                            <div>
-                                <label for="image">상품 이미지 : </label>
-                                <input type="file" name="" id="" th:field="*{image}">
+                            <div class="col-12">
+                                <label for="text" class="form-label">상품 이미지 업로드</label>
+                                <input type="file" class="form-control" id="imgFile" name="imgFile">
                             </div>
                         </div>
                     </div>

@@ -29,7 +29,10 @@ public class Goods {
     private String context; //상품 설명
 
     @Column
-    private String image; //상품 이미지
+    private String imgName; //상품 이미지
+
+    @Column
+    private String imgPath;
 
     @Column
     private Long price; //상품 가격
@@ -38,6 +41,8 @@ public class Goods {
     private boolean sold; //판매 가능 여부
 
     @Column
-    private String count; //남은 수량
+    private String count; //재고
+
+
 
 }

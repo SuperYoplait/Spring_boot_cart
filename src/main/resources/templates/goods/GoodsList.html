@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
@@ -68,29 +70,35 @@
             </div>
         </div>
 
-
-        <div>
-            전체상품 : <span th:text="${list.TotalElements}"></span>
-        </div>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            <span th:if="${list.TotalElements < 1 }">등록된 상품이 없습니다.</span>
-
-            <div class="col">
-                <div class="card h-100">
-                    <table th:if="${list.TotalElements > 0 }" class="card-body">
-                        <tbody>
-                            <tr th:each=" row : ${list}" th:onclick="'javascript: detail('+ ${row.id}+')'">
-                                <td th:text="${row.image}">이미지</td>
-                                <td th:text="${row.name}">상품명</td>
-                                <td th:text="${row.price}">가격</td>
-                            </tr>
-                        </tbody>
-                        
-                    </table>
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <!-- 첫번째 아이템 -->
+                    <div th:each="item : ${list}">
+                        <div class="card">
+                            <!-- 제품 이미지-->
+                            <div style="width:16rem;">
+                                <img class="card-img-top" th:src="@{${item.getImgPath()}}" alt=""/>
+                            </div>
+                            
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- 제품 명-->
+                                    <h5 class="fw-bolder" th:text="${item.getName()}">상품명</h5>
+                                    <!-- 제품 가격-->
+                                    <p th:text="|${item.getPrice()} 원|">가격</p>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                    th:href="@{/goods/detail/{id}(id=${item.getId()})}">상세보기</a></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </section>
 
         <div class="Board-pagination" th:if="${list.TotalElements > 0}">
             <ul class="pagination justify-content-center">
@@ -118,8 +126,8 @@
 </html>
 
 
-<script>    
-    function detail(param) {  
-        location.href = "/goods/detail?id="+param;
+<script>
+    function detail(param) {
+        location.href = "/goods/detail?id=" + param;
     }
 </script>

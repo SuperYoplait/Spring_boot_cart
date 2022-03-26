@@ -1,17 +1,16 @@
 package com.springdemo.cartdemo.goods;
 
-import javax.validation.Valid;
-
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,8 +37,8 @@ public class GoodsController {
         return "goods/GoodsList";
     }
 
-    @GetMapping("/detail")
-    public String Goods_Detail(Model model, @RequestParam(required = false) Long id) {
+    @GetMapping("/detail/{goodsId}")
+    public String Goods_Detail(Model model, @PathVariable("goodsId") Long id) {
         goodsService.detailProcess(model, id);
         model.addAttribute("title", "상품명");
         return "goods/GoodsDetail";
@@ -52,12 +51,8 @@ public class GoodsController {
     }
 
     @PostMapping("/goods-add")
-    public String Goods_Add_Post(@Valid GoodsForm goodsForm, Errors errors, Model model) {
-        if (errors.hasErrors()) {
-            return "goods/GoodsAdd";
-        }
-        Goods newGoods = goodsService.updateProcess(goodsForm);
-
+    public String Goods_Add_Post(GoodsForm goodsForm ,MultipartFile imgFile, Model model) throws Exception{
+        Goods newGoods = goodsService.updateProcess(goodsForm, imgFile);
         return "redirect:/goods/detail?id=" + newGoods.getId();
     }
 

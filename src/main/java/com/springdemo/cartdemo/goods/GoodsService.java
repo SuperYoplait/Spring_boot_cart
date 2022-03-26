@@ -1,9 +1,12 @@
 package com.springdemo.cartdemo.goods;
 
+import java.io.File;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,27 +15,24 @@ import lombok.RequiredArgsConstructor;
 public class GoodsService {
     private final GoodsRepositroy goods_Repositroy;
 
-    public void detailProcess(Model model, Long id) { //구매자 상세보기
-        if (id != null) {
-            Optional<Goods> goods = goods_Repositroy.findById(id);
+    public void detailProcess(Model model, Long id) { // 구매자 상세보기
+        Optional<Goods> goods = goods_Repositroy.findById(id);
+        if (goods.isPresent()) {
+            GoodsForm goodsForm = GoodsForm.builder()
+                    .id(goods.get().getId())
+                    .name(goods.get().getName())
+                    .context(goods.get().getContext())
+                    .price(goods.get().getPrice())
+                    .imgName(goods.get().getImgName())
+                    .imgPath(goods.get().getImgPath())
+                    .build();
 
-            if (goods.isPresent()) {
-                GoodsForm goodsForm = GoodsForm.builder()
-                        .id(goods.get().getId())
-                        .name(goods.get().getName())
-                        .context(goods.get().getContext())
-                        .price(goods.get().getPrice())
-                        .image(goods.get().getImage())
-                        .build();
-
-                model.addAttribute("GoodsForm", goodsForm);
-            }
-        } else {
-            model.addAttribute("GoodsForm", new GoodsForm());
+            model.addAttribute("GoodsForm", goodsForm);
         }
+
     }
 
-    public void new_gooodsProcess(Model model, Long id){ //판매자 상새보기
+    public void new_gooodsProcess(Model model, Long id) { // 판매자 상새보기
         if (id != null) {
             Optional<Goods> goods = goods_Repositroy.findById(id);
 
@@ -43,8 +43,8 @@ public class GoodsService {
                         .context(goods.get().getContext())
                         .price(goods.get().getPrice())
                         .count(goods.get().getCount())
-                        //.sold(goods.get().getSold())
-                        .image(goods.get().getImage())
+                        .imgName(goods.get().getImgName())
+                        .imgPath(goods.get().getImgPath())
                         .build();
                 model.addAttribute("GoodsForm", goodsForm);
             }
@@ -52,9 +52,26 @@ public class GoodsService {
             model.addAttribute("GoodsForm", new GoodsForm());
         }
     }
-    
-    public Goods updateProcess(GoodsForm GoodsForm) { //제품 수정사항 변경
+
+    public Goods updateProcess(GoodsForm GoodsForm, MultipartFile imgFile) throws Exception { // 제품 수정사항 변경
+        String oriImgName = imgFile.getOriginalFilename();
+        String imgName = "";
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+
+        // UUID 를 이용하여 파일명 새로 생성
+        // UUID - 서로 다른 객체들을 구별하기 위한 클래스
+        UUID uuid = UUID.randomUUID();
+
+        String savedFileName = uuid + "_" + oriImgName; //저장될 파일명
+        imgName = savedFileName;
+
+        File saveFile = new File(projectPath, imgName);
+
+        imgFile.transferTo(saveFile);
+
+
         Goods newGoods;
+
 
         if (GoodsForm.getId() == null) {
             newGoods = Goods.builder()
@@ -63,11 +80,9 @@ public class GoodsService {
                     .context(GoodsForm.getContext())
                     .price(GoodsForm.getPrice())
                     .count(GoodsForm.getCount())
-                    //.sold(GoodsForm.getSold())
-                    .image(GoodsForm.getImage())
+                    .imgName(imgName)
+                    .imgPath("/files/" + imgName)
                     .build();
-
-            newGoods.setSold(GoodsForm.isSold());
         } else {
             newGoods = Goods.builder()
                     .id(GoodsForm.getId())
@@ -75,20 +90,13 @@ public class GoodsService {
                     .context(GoodsForm.getContext())
                     .price(GoodsForm.getPrice())
                     .count(GoodsForm.getCount())
-                    //.sold(GoodsForm.getSold())
-                    .image(GoodsForm.getImage())
+                    .imgName(imgName)
+                    .imgPath("/files/" + imgName)
                     .build();
-
-            newGoods.setSold(GoodsForm.isSold());
         }
-
+        newGoods.setSold(GoodsForm.isSold()); //상품 판매 선택 
         goods_Repositroy.save(newGoods);
 
-        /*
-        System.out.println("\n");
-        System.out.println(newGoods);
-        System.out.println("\n");
-        */
         return newGoods;
     }
 

@@ -33,6 +33,8 @@ public class GoodsForm {
     private boolean sold;
 
     //@NotBlank
-    private String image;
+    private String imgName;
+
+    private String imgPath;
 
 }
