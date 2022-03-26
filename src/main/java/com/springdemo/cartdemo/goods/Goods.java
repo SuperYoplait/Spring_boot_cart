@@ -26,6 +26,9 @@ public class Goods {
     private String name; //상품명
 
     @Column
+    private String categorie;
+
+    @Column
     private String context; //상품 설명
 
     @Column
@@ -41,7 +44,7 @@ public class Goods {
     private boolean sold; //판매 가능 여부
 
     @Column
-    private String count; //재고
+    private Long count; //재고
 
 
 

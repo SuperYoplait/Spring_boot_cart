@@ -25,7 +25,7 @@ public class GoodsControllerTest {
     @DisplayName("상품등록 - 정상")
     @Test
     void board_insert_true() throws Exception {
-        //for(int i = 0; i< 300; i++){
+        for(int i = 0; i< 30; i++){
             mockMvc.perform(post("/goods/goods-add")
                 .param("name", "test name")
                 .param("context", "test context")
@@ -35,7 +35,7 @@ public class GoodsControllerTest {
                 .param("imgFile", "/img/images.png")
                 )
                 .andExpect(status().is3xxRedirection());
-        //}
+        }
         
     }
 }

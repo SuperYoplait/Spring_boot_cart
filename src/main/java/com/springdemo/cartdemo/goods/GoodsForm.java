@@ -28,7 +28,7 @@ public class GoodsForm {
     private Long price;
 
     //@NotBlank
-    private String count;
+    private Long count;
 
     private boolean sold;
 
