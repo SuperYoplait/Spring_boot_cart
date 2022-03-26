@@ -12,13 +12,13 @@
 <header th:replace="fragments/cm_top.html"></header>
 
 <body>
-    <main class="form-signin">
+    <main class="form-signin col-md-6 col-md-offset-3" style="margin: 0 auto;">
         <form>
           <h1 class="h3 mb-3 fw-normal">Cart-Demo Login</h1>
       
           <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="아이디 입력">
-            <label for="floatingInput">아이디</label>
+            <input type="text" class="form-control" id="floatingInput" placeholder="아이디 또는 이메일">
+            <label for="floatingInput">아이디 또는 이메일</label>
           </div>
           <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 입력">
@@ -30,7 +30,8 @@
               <input type="checkbox" value="remember-me">자동로그인
             </label>
           </div>
-          <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+          <button class="w-100 btn btn-lg btn-primary mb-1" type="submit">로그인</button>
+          <a href="/account/sign-up" class="w-100 btn btn-lg btn-primary">회원가입</a>
         </form>
       </main>
 </body>

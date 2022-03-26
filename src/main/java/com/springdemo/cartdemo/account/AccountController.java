@@ -1,7 +1,14 @@
 package com.springdemo.cartdemo.account;
 
+import javax.validation.Valid;
+
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,14 +18,32 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/account")
 @RequiredArgsConstructor
 public class AccountController {
+
+    private final AccountService accountService;
+    private final AccountRepositroy accountRepository;
+    private final AccountRoleRepository accountRoleRepository;
+    private final AccountSignUpValidator AccountSignUpValidator;
+
+    @InitBinder("AccountSignUpForm")
+    public void InitBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(AccountSignUpValidator);
+    }
+
     //회원가입
     @GetMapping("/sign-up")
-    public String SignUp_GET(){
+    public String SignUp_GET(Model model){
+        model.addAttribute("AccountSignUpForm", new Account());
         return "account/SignUp";
     }
     @PostMapping("/sign-up")
-    public String SignUp_POST(){
-        return "";
+    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors){
+       
+        if (errors.hasErrors()) {
+            return "login/sign-up";
+        }
+
+        accountService.signUp(signUpForm);  
+        return "redirect:/";
     }
 
     //로그인
