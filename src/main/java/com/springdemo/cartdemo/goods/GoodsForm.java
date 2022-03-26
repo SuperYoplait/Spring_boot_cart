@@ -21,6 +21,8 @@ public class GoodsForm {
     //@Length(min = 5, max = 400)
     private String name;
 
+    private String categorie;
+
     //@Length(min = 5)
     private String context;
 

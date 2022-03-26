@@ -30,6 +30,7 @@ public class GoodsService {
                 GoodsForm goodsForm = GoodsForm.builder()
                         .id(goods.get().getId())
                         .name(goods.get().getName())
+                        .categorie(goods.get().getCategorie())
                         .context(goods.get().getContext())
                         .price(goods.get().getPrice())
                         .count(goods.get().getCount())
@@ -51,23 +52,17 @@ public class GoodsService {
         // UUID 를 이용하여 파일명 새로 생성
         // UUID - 서로 다른 객체들을 구별하기 위한 클래스
         UUID uuid = UUID.randomUUID();
-
         String savedFileName = uuid + "_" + oriImgName; //저장될 파일명
         imgName = savedFileName;
-
         File saveFile = new File(projectPath, imgName);
-
         imgFile.transferTo(saveFile);
-
-
         Goods newGoods;
-
-
         if (GoodsForm.getId() == null) {
             newGoods = Goods.builder()
                     .id(null)
                     .name(GoodsForm.getName())
                     .context(GoodsForm.getContext())
+                    .categorie(GoodsForm.getCategorie())
                     .price(GoodsForm.getPrice())
                     .count(GoodsForm.getCount())
                     .imgName(imgName)
@@ -78,12 +73,14 @@ public class GoodsService {
                     .id(GoodsForm.getId())
                     .name(GoodsForm.getName())
                     .context(GoodsForm.getContext())
+                    .categorie(GoodsForm.getCategorie())
                     .price(GoodsForm.getPrice())
                     .count(GoodsForm.getCount())
                     .imgName(imgName)
                     .imgPath("/files/" + imgName)
                     .build();
         }
+        System.out.println("\n\n" + newGoods + "\n\n");
         newGoods.setSold(GoodsForm.isSold()); //상품 판매 선택 
         goods_Repositroy.save(newGoods);
 

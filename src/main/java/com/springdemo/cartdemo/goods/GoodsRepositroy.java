@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GoodsRepositroy extends JpaRepository<Goods, Long>{
     Page<Goods> findByNameContaining(String name, Pageable pageable);
-    Page<Goods> findByCategorie(String categorie, Pageable pageable);
+    Page<Goods> findByCategorieContaining(String categorie, Pageable pageable);
     //Page<Goods> findByIdContainingOrNameContainingOrderByIdDesc(String name, String name2, Pageable pageable);
 }

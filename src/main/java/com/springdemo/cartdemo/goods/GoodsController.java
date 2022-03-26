@@ -28,12 +28,13 @@ public class GoodsController {
     @GetMapping("/list")
     public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String goods,
-            @RequestParam(required = false, defaultValue = "") String categories) {
+            @RequestParam(required = false, defaultValue = "") String categorie) {
                 
 
         Page<Goods> GoodsPagingList;
-        if (!categories.isEmpty()) {            
-            GoodsPagingList = goodsRepositroy.findByCategorie(categories, pageable);
+        if (!categorie.isEmpty()) {   
+            System.out.println("\n\n\n카테고리조회입니다.\n\n\n");         
+            GoodsPagingList = goodsRepositroy.findByCategorieContaining(categorie, pageable);
 
         } else {
             GoodsPagingList = goodsRepositroy.findByNameContaining(goods, pageable);            
