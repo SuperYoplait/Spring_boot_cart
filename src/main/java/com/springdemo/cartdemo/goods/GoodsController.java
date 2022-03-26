@@ -54,8 +54,7 @@ public class GoodsController {
 
     @GetMapping("/detail/{goodsId}")
     public String Goods_Detail(Model model, @PathVariable("goodsId") Long id) {
-        goodsService.detailProcess(model, id);
-        model.addAttribute("title", "상품명");
+        goodsService.goods_View_Process(model, id);
         return "goods/GoodsDetail";
     }
 
@@ -68,7 +67,7 @@ public class GoodsController {
     @PostMapping("/goods-add")
     public String Goods_Add_Post(GoodsForm goodsForm, MultipartFile imgFile, Model model) throws Exception {
         Goods newGoods = goodsService.updateProcess(goodsForm, imgFile);
-        return "redirect:/goods/detail?id=" + newGoods.getId();
+        return "redirect:/goods/detail/" + newGoods.getId();
     }
 
     @GetMapping("/goods-delete")
