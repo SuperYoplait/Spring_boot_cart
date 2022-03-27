@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/account/login")
                     .permitAll()
+    
                 .and()
                 .logout()
                 .logoutUrl("/logout")

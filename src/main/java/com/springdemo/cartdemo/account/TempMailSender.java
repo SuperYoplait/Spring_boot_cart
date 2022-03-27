@@ -7,7 +7,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +17,7 @@ public class TempMailSender implements JavaMailSender {
     @Override
     public void send(SimpleMailMessage simpleMessage) throws MailException {
         System.out.println(simpleMessage);
-        System.out.println("메일 전송 완료~(추상화)");
+        System.out.println("메일 전송 완료~(가짜빈)");
     }
 
     @Override

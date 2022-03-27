@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 
@@ -72,6 +73,33 @@ public class AccountController {
     @PostMapping("/auth-update")
     public String Auth_Update_POST() {
         return "";
+    }
+    //인증메일 전송
+    @GetMapping("/resend")
+    public String mail_resend_index() {
+        return "account/emailcheck";
+    }
+    // 인증메일 재전송
+    @GetMapping("/resend_email")
+    public String mail_resend(@CurrentUser Account account, Model model) {
+        if(!account.canSendConfirmEmail()){
+            model.addAttribute("error", "인증 이메일은 1시간에 한번만 전송할 수 있습니다.");
+            model.addAttribute("email", account.getEmail());
+            return "account/emailcheck";
+        } else if(account.canSendConfirmEmail()) {
+            model.addAttribute("error", "메일이 전송되었습니다!");
+            accountService.sendSignUpConfirmEmail(account);
+            return "account/emailcheck";
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/signupcheck")
+    public String token_check(Model model, @RequestParam String token, @RequestParam Long userid) {
+
+        accountService.signupProcess(model, token, userid);
+        return "account/tokencheck";
     }
 
 }
