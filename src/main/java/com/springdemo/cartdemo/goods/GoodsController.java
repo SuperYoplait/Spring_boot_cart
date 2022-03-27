@@ -2,8 +2,6 @@ package com.springdemo.cartdemo.goods;
 
 import org.springframework.data.web.PageableDefault;
 
-import javax.validation.constraints.Null;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
