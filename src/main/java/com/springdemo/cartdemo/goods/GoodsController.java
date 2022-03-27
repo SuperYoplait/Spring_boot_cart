@@ -26,7 +26,7 @@ public class GoodsController {
     private final GoodsService goodsService;
 
     @GetMapping("/list")
-    public String Goods_List(Model model, @PageableDefault(size = 10) Pageable pageable,
+    public String Goods_List(Model model, @PageableDefault(size = 12) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String goods,
             @RequestParam(required = false, defaultValue = "") String categorie) {
                 

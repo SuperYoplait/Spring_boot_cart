@@ -29,4 +29,8 @@ public class AccountSignUpForm {
     @NotBlank
     @Length(min = 3, max = 20)
     private String password;
+
+    
+
+
 }
