@@ -31,22 +31,26 @@ public class GoodsControllerTest {
     @DisplayName("상품등록 - 정상")
     @Test
     void goods_insert_true() throws Exception {
+        String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
         String fileName = "imgFile";
-        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png");
+        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/test-pepe.jpg");
 
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
-
         //mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        mockMvc.perform(
-            multipart("/goods/goods-add").file(image)
-            .param("name","test name")
-            .param("context","test context")
-            .param("price","1000")
-            .param("count","10")
-            .param("sole","true")
-            .with(csrf()))
-            .andExpect(status().is3xxRedirection());
+        for(int i = 0; i<20; i++){
+            mockMvc.perform(
+                multipart("/goods/goods-add").file(image)
+                .param("name","test name" + (i+1))
+                .param("context","test context" + (i+1))
+                .param("price","100000000")
+                .param("count","1")
+                .param("categorie", array[8])
+                .param("sole","true")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+        }
+        
     }
     
 }

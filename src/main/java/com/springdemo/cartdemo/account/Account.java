@@ -1,19 +1,28 @@
 package com.springdemo.cartdemo.account;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+@Data
 @Entity
 @Table(name = "ACCOUNT")
 @Builder
@@ -45,6 +54,14 @@ public class Account {
     @Column(columnDefinition = "boolean default false")
     private Boolean token_bool;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name="authority",
+        joinColumns =  @JoinColumn(name="accountId"),
+        inverseJoinColumns = @JoinColumn(name="roleId")
+    )
+    List<AccountRole> roles = new ArrayList<>();
+
 
     @PostPersist
     public void creationEmailTokenValue() { // 인증 값 생성
@@ -66,4 +83,6 @@ public class Account {
         //return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
         return true;//테스트용 트루임 주석처리하세요
     }
+
+	
 }

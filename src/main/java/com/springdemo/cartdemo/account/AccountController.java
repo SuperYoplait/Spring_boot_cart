@@ -38,6 +38,7 @@ public class AccountController {
 
     @PostMapping("/sign-up")
     public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors) {
+        System.out.println("\n\n"+ signUpForm + "\n\n");
         if (errors.hasErrors()) {
             return "login/sign-up";
         }

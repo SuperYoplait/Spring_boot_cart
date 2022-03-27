@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+</html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인</title>
 </head>
 
 <header th:replace="fragments/cm_top.html"></header>
 
 <body>
-    <main class="form-signin col-md-6 col-md-offset-3" style="margin: 0 auto;">
-        <form>
-          <h1 class="h3 mb-3 fw-normal">Cart-Demo Login</h1>
-      
-          <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput" placeholder="아이디 또는 이메일">
-            <label for="floatingInput">아이디 또는 이메일</label>
-          </div>
-          <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 입력">
-            <label for="floatingPassword">비밀번호</label>
-          </div>
-      
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me">자동로그인
-            </label>
-          </div>
-          <button class="w-100 btn btn-lg btn-primary mb-1" type="submit">로그인</button>
-          <a href="/account/sign-up" class="w-100 btn btn-lg btn-primary">회원가입</a>
-        </form>
-      </main>
+  <main class="form-signin col-md-6 col-md-offset-3" style="margin: 0 auto;">
+    <form th:action="@{/account/login}" method="post">
+      <h1 class="h3 mb-3 fw-normal">Cart-Demo Login</h1>
+
+      <div class="form-floating">
+        <input type="text" class="form-control" id="floatingInput" placeholder="아이디 또는 이메일" name="username">
+        <label for="floatingInput">아이디 또는 이메일</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 입력" name="password">
+        <label for="floatingPassword">비밀번호</label>
+      </div>
+      <div th:if="${param.error}">
+        <p class="text-danger">아이디 또는 패스워드가 일치하지 않습니다.</p>
+      </div>
+
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me">자동로그인
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary mb-1" type="submit">로그인</button>
+      <a href="/account/sign-up" class="w-100 btn btn-lg btn-primary">회원가입</a>
+    </form>
+  </main>
 </body>
+
 </html>
