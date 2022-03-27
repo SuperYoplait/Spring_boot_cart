@@ -43,7 +43,7 @@ public class Account {
     private String email;
     
     @Column
-    private String Password;
+    private String password;
     
     @Column
     private String token;
@@ -51,7 +51,7 @@ public class Account {
     @Column
     private LocalDateTime time;
     
-    @Column(columnDefinition = "boolean default false")
+    @Column //(columnDefinition = "boolean default false")
     private Boolean token_bool;
 
     @ManyToMany(fetch = FetchType.EAGER)
