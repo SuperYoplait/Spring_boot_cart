@@ -55,7 +55,8 @@ public class AccountController {
 
     // 회원 정보 수정
     @GetMapping("/info")
-    public String Info_Update_GET() {
+    public String Info_Update_GET(Model model, @CurrentUser Account account) {
+        accountService.infoProcess(model, account.getId());
         return "account/Info";
     }
 
