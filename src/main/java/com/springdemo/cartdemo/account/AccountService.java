@@ -146,4 +146,23 @@ public class AccountService implements UserDetailsService {
 
         }
     }
+
+    public void infoProcess(Model model, Long id){
+        if(id != null){
+            Optional<Account> account = accountRepository.findById(id);
+
+
+            if (account.isPresent()) {
+                AccountInfoForm infoForm = AccountInfoForm.builder()
+                        .id(account.get().getId())
+                        .userid(account.get().getUserid())
+                        .password(account.get().getPassword())
+                        .name(account.get().getName())
+                        .email(account.get().getEmail())
+                        .build();
+                        
+                model.addAttribute("infoForm", infoForm);
+            }
+        }
+    }
 }

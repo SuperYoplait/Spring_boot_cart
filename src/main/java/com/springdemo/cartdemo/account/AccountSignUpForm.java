@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class AccountSignUpForm {
     @NotBlank
     @Length(min = 3, max = 20)
