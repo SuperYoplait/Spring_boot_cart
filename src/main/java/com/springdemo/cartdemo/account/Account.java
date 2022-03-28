@@ -64,8 +64,10 @@ public class Account {
 
 
     @PostPersist
-    public void creationEmailTokenValue() { // 인증 값 생성
+    public void setTokeninit() { // 인증 값 생성
         this.token = UUID.randomUUID().toString();
+        this.token_bool = false;
+        this.time = LocalDateTime.now();
     }
 
     public void setEmailTokentrue() {

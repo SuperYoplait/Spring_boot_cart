@@ -54,10 +54,9 @@ public class AccountService implements UserDetailsService {
                     .roles(roles)
                     
                     .build();
-            //mailMessage(newAccount);
-            newAccount.setEmailTokenfalse();
-            newAccount.setEmailTokenSendtime();
-            newAccount.creationEmailTokenValue();
+            mailSend(newAccount.getEmail(), newAccount.getName(), newAccount.getToken(), newAccount.getId());            
+          
+            newAccount.setTokeninit();
             accountRepository.save(newAccount);
         });
 
