@@ -7,6 +7,8 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.io.File;
 import java.io.FileInputStream;
 
+import com.springdemo.cartdemo.Item.ItemRepositroy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +22,17 @@ import org.springframework.web.context.WebApplicationContext;
 //import javax.transaction.Transactional;
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GoodsControllerTest {
+public class ItemControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private GoodsRepositroy goodsRepository;
+    private ItemRepositroy itemRepository;
     private WebApplicationContext webApplicationContext;
 
     @DisplayName("상품등록 - 정상")
     @Test
-    void goods_insert_true() throws Exception {
+    void item_insert_true() throws Exception {
         String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
         String fileName = "imgFile";
         File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/test-pepe.jpg");

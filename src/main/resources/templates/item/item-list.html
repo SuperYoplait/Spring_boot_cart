@@ -18,8 +18,8 @@
         <form method="get">
             <div class="input-group mb-3">
                 <div>
-                    <label for="goods">상품 검색</label>
-                    <input type="text" id="goods" placeholder="상품명" name="goods" th:value="${name}">
+                    <label for="item">상품 검색</label>
+                    <input type="text" id="item" placeholder="상품명" name="item" th:value="${name}">
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary mb-3">검색</button>
@@ -29,42 +29,42 @@
 
         <div class="d-flex justify-content-center">
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=fruit}" style="color: black">
+                <a th:href="@{/item/list?categorie=fruit}" style="color: black">
                     과일/견과
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=greens}" style="color: black">
+                <a th:href="@{/item/list?categorie=greens}" style="color: black">
                     채소
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=milk}" style="color: black">
+                <a th:href="@{/item/list?categorie=milk}" style="color: black">
                     우유/유제품
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=instant}" style="color: black">
+                <a th:href="@{/item/list?categorie=instant}" style="color: black">
                     라면/간편식
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=beverage}" style="color: black">
+                <a th:href="@{/item/list?categorie=beverage}" style="color: black">
                     생수/음료/커피
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=seasoning}" style="color: black">
+                <a th:href="@{/item/list?categorie=seasoning}" style="color: black">
                     장/조미료
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=snacks}" style="color: black">
+                <a th:href="@{/item/list?categorie=snacks}" style="color: black">
                     과자/빵/빙과
                 </a>
             </div>
             <div class="p-2">
-                <a th:href="@{/goods/list?categorie=infant}" style="color: black">
+                <a th:href="@{/item/list?categorie=infant}" style="color: black">
                     유아동/완구
                 </a>
             </div>
@@ -92,7 +92,7 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    th:href="@{/goods/detail/{id}(id=${item.getId()})}">상세보기</a></div>
+                                    th:href="@{/item/detail/{id}(id=${item.getId()})}">상세보기</a></div>
                             </div>
                         </div>
                     </div>
@@ -104,18 +104,18 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item " th:classappend="${startPage < list.pageable.pageSize} ? 'disabled'">
                     <a class="page-link"
-                        th:href="@{/goods/list(page=${startPage - list.pageable.pageSize-1}, searchGoodsName=${param.searchGoodsName})}"
+                        th:href="@{/item/list(page=${startPage - list.pageable.pageSize-1}, searchItemName=${param.searchItemName})}"
                         tabindex="-1" aria-disabled="true">이전</a>
                 </li>
                 <li class="page-item" th:classappend="${i == list.pageable.pageNumber+1} ? 'disabled'"
                     th:each="i : ${#numbers.sequence(startPage, endPage)}"><a class="page-link"
-                        th:href="@{/goods/list(page=${i-1}, searchGoodsName=${param.searchGoodsName})}"
+                        th:href="@{/item/list(page=${i-1}, searchItemName=${param.searchItemName})}"
                         th:text="${i}">1</a>
                 </li>
                 <li class="page-item "
                     th:classappend="${startPage + list.pageable.pageSize >  list.totalPages } ? 'disabled'">
                     <a class="page-link"
-                        th:href="@{/goods/list(page=${startPage + list.pageable.pageSize -1 }, searchGoodsName=${param.searchGoodsName})}">다음</a>
+                        th:href="@{/item/list(page=${startPage + list.pageable.pageSize -1 }, searchItemName=${param.searchItemName})}">다음</a>
                 </li>
             </ul>
         </div>
@@ -128,6 +128,6 @@
 
 <script>
     function detail(param) {
-        location.href = "/goods/detail?id=" + param;
+        location.href = "/item/detail?id=" + param;
     }
 </script>

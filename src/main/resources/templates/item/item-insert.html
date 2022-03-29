@@ -23,7 +23,7 @@
 
           
             <div class="col-8 m-auto">
-                <form th:action="@{/goods/goods-add}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <form th:action="@{/item/item-add}" class="form-horizontal" method="post" enctype="multipart/form-data">
                     <input class="form-control" type="hidden" name="id" id="id">
 
                     <div class="row">
@@ -85,7 +85,7 @@
 
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn float-right">등록</button>
-                        <input type="button" class="btn btn-secondary btn float-right" onclick="location.href='/goods/list'" value="취소">
+                        <input type="button" class="btn btn-secondary btn float-right" onclick="location.href='/item/list'" value="취소">
                     </div>
                 </form>
 

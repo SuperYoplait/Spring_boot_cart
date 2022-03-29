@@ -1,4 +1,4 @@
-package com.springdemo.cartdemo.goods;
+package com.springdemo.cartdemo.Item;
 
 //import javax.validation.constraints.NotBlank;
 
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoodsForm {
+public class ItemForm {
 
     //@NotBlank
     private Long id;

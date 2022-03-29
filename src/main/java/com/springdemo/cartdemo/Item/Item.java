@@ -1,4 +1,4 @@
-package com.springdemo.cartdemo.goods;
+package com.springdemo.cartdemo.Item;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Goods {
+public class Item {
     @Id
     @GeneratedValue
     private Long id;
