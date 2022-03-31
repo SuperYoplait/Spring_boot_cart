@@ -7,7 +7,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.io.File;
 import java.io.FileInputStream;
 
-import com.springdemo.cartdemo.Item.ItemRepositroy;
+//import com.springdemo.cartdemo.Item.ItemRepositroy;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +16,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+//import org.springframework.web.context.WebApplicationContext;
 
 //import javax.transaction.Transactional;
 @SpringBootTest
@@ -25,11 +25,11 @@ import org.springframework.web.context.WebApplicationContext;
 public class ItemControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
+/*
     @Autowired
     private ItemRepositroy itemRepository;
     private WebApplicationContext webApplicationContext;
-
+*/
     @DisplayName("상품등록 - 정상")
     @Test
     void item_insert_true() throws Exception {
