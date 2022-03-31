@@ -19,6 +19,7 @@ public class ItemService {
         Optional<Item> item = itemRepositroy.findById(id);
         Item view_item = item.get();
         model.addAttribute("item", view_item);
+        model.addAttribute("itemId", id);
     }
 
     public void new_item_process(Model model, Long id) { // 판매자 상새보기

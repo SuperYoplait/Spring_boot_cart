@@ -22,7 +22,7 @@ public class CartController {
 
     private final Long id = 3080L;
     @GetMapping("/my-cart")
-    public String my_cart(Model model){
+    public String my_cart(Model model){ // id 불러오기
         List<CartItem> select_cartId = cartItemRepository.findByCartId(id);
         Optional<Cart> select_user = cartRepository.findById(id);
         
