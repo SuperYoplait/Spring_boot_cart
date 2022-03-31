@@ -25,6 +25,7 @@ public class ItemService {
         if (id != null) {
             Optional<Item> item = itemRepositroy.findById(id);
 
+            
             if (item.isPresent()) {
                 ItemForm itemForm = ItemForm.builder()
                         .id(item.get().getId())
