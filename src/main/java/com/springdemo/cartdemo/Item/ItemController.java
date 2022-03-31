@@ -51,13 +51,15 @@ public class ItemController {
 
     }
 
+    //상품상세보기
     @GetMapping("/detail/{itemId}")
     public String item_detail(Model model, @PathVariable("itemId") Long id) {
         itemService.item_view_process(model, id);
         return "item/item-detail";
     }
 
-    @GetMapping("/item-add")
+    //상품 등록
+    @GetMapping("/item-add") //권한에 막혀야됨 - 일반 구매자 접근 제한 - 판매자, 관리자만 접근 가능
     public String item_add(Model model, @RequestParam(required = false) Long id) {
         itemService.new_item_process(model, id);
         return "item/item-insert";
@@ -69,8 +71,16 @@ public class ItemController {
         return "redirect:/item/detail/" + newItem.getId();
     }
 
+    //상품 장바구니에 추가
+    @GetMapping("/item-insert/{itemId}")
+    public String item_cart_insert(Model model, @PathVariable("itemId") Long id){
+        return "";
+    }
+
     @GetMapping("/item-delete")
     public String Goods_Delete() {
         return "";
     }
+
+
 }

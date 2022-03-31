@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "GOODS")
+@Table(name = "ITEM")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +26,7 @@ public class Item {
     private String name; //상품명
 
     @Column
-    private String categorie;
+    private String categorie; //카테고리
 
     @Column
     private String context; //상품 설명
@@ -35,7 +35,7 @@ public class Item {
     private String imgName; //상품 이미지
 
     @Column
-    private String imgPath;
+    private String imgPath; //이미지 경로
 
     @Column
     private Long price; //상품 가격
@@ -46,6 +46,7 @@ public class Item {
     @Column
     private Long count; //재고
 
-
+    @Column
+    private String Option; //상품 옵션
 
 }

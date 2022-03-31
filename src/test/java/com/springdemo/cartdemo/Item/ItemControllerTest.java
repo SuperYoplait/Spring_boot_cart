@@ -1,4 +1,4 @@
-package com.springdemo.cartdemo.goods;
+package com.springdemo.cartdemo.Item;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

@@ -13,8 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
+
+import com.springdemo.cartdemo.cart.Cart;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,13 +57,17 @@ public class Account {
     @Column //(columnDefinition = "boolean default false")
     private Boolean token_bool;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER) //권한 테이블 M:N join
     @JoinTable(
         name="authority",
         joinColumns =  @JoinColumn(name="accountId"),
         inverseJoinColumns = @JoinColumn(name="roleId")
     )
     List<AccountRole> roles = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
 
     @PostPersist
