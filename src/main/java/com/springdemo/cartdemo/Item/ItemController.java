@@ -82,6 +82,4 @@ public class ItemController {
     public String Goods_Delete() {
         return "";
     }
-
-
 }

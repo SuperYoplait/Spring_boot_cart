@@ -2,7 +2,7 @@ package com.springdemo.cartdemo.account;
 
 import javax.validation.Valid;
 
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
+//import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class AccountController {
 
     private final AccountService accountService;
-    private final AccountRepositroy accountRepository;
-    private final AccountRoleRepository accountRoleRepository;
+//    private final AccountRepositroy accountRepository;
+//    private final AccountRoleRepository accountRoleRepository;
     private final AccountSignUpValidator AccountSignUpValidator;
 
     @InitBinder("AccountSignUpForm")
