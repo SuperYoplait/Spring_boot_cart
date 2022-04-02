@@ -74,7 +74,7 @@ public class ItemController {
     //상품 장바구니에 추가
     @GetMapping("/item-insert")
     public String item_cart_insert(Model model, @RequestParam Long id){
-        
+
         return "redirect:/my-cart";
     }
 
@@ -82,4 +82,5 @@ public class ItemController {
     public String Goods_Delete() {
         return "";
     }
+
 }
