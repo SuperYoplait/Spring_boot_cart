@@ -4,6 +4,12 @@ import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.springdemo.cartdemo.account.Account;
+import com.springdemo.cartdemo.cart.Cart;
+import com.springdemo.cartdemo.cart.CartRepositroy;
+import com.springdemo.cartdemo.cartitem.CartItem;
+import com.springdemo.cartdemo.cartitem.CartItemRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepositroy itemRepositroy;
+    private final CartItemRepository cartitemRepositroy;
+    private final CartRepositroy cartRepositroy;
 
     public void item_view_process(Model model, Long id) { // 구매자 상세보기
         Optional<Item> item = itemRepositroy.findById(id);
@@ -88,8 +96,30 @@ public class ItemService {
         return newItem;
     }
 
-    public void item_cart_insert(){
+    public void insertProcess(Model model, ItemInsertForm itemInsertForm, Account account){
         
+        Optional<Cart> addCart = cartRepositroy.findById(account.getCart().getId());
+        System.out.println("\n\n\n\n CartItemID" + account.getCart().getId());
+        
+        Optional<Item> serchItem = itemRepositroy.findById(itemInsertForm.getId());
+        System.out.println("\n\n\n\n serchItem" + serchItem);
+        CartItem newCartItem;
+        if(addCart.isPresent() && serchItem.isPresent()) {
+            //newCartItem = addCartItem.get();
+            
+            newCartItem = CartItem.builder()
+                        .cnt(itemInsertForm.getCount())
+                        .item(serchItem.get())
+                        .cart(account.getCart())
+                        .build();
+           
+            cartitemRepositroy.save(newCartItem);
+        }else {
+            model.addAttribute("error", "부적절한 경로");
+        } 
+        
+        
+
     }
 
 }

@@ -13,12 +13,14 @@ import com.springdemo.cartdemo.Item.Item;
 import com.springdemo.cartdemo.cart.Cart;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "CARTITEM")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartItem {

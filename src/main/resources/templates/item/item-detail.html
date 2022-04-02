@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+</html>
 
 <head>
     <meta charset="UTF-8">
@@ -14,36 +16,39 @@
 <body>
     <div class="container">
         <section class="py-5">
-            
+
             <div class="container px-4 px-lg-5 my-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
-                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${item.getImgPath()}}" alt="..." /></div>
-                    <input class="form-control" type="hidden" id = "itemId" th:value="${itemId}">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${item.getImgPath()}}"
+                            alt="..." /></div>
+                    
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bolder" th:text="${item.getName()}">상품 이름</h1>
                         <div class="fs-5 mb-5">
                             <span th:text="|${item.getPrice()} 원|">아이템 가격</span>
                         </div>
                         <p class="lead" th:text="${item.getContext()}">아이템 설명</p>
-
-                        <div class="d-flex">
-                            <a th:href="@{/account/login}">
+                        <form th:action="@{/item/item-insert}" method="post" th:object="${itemInsertForm}">
+                            <input class="form-control" type="hidden" th:field="${item.id}">          
+                            <div class="d-flex">
+                                <!-- <a th:href="@{/account/login}">
                                 <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                     구매하기
                                 </button>
-                            </a>
-                            <a class="btn btn-outline-dark" onclick="insertItem();">
-                                <i class="bi-cart-fill me-1"></i>
-                                장바구니
-                            </a>
+                            </a> -->
+                                
+                            <label for="count" class="form-label">남은 수량
+                                <input class="form-control" type="number" value="1" min="1" max ="10" name="count" id="count" required>
+                            </label>
 
-                            <a class="btn btn-outline-dark" th:href="@{/item/list}">
-                                <i class="bi-cart-fill me-1"></i>
-                                목록
-                            </a>
-                        </div>
+                                <button class="btn btn-outline-dark" type= "submit">
+                                    <i class="bi-cart-fill me-1"></i>
+                                    장바구니에 담기
+                                </button>
+                        </form>
 
-<!--                    시큐리티 먹이면 할 거
+                        
+                        <!--                    시큐리티 먹이면 할 거
                         <form class="d-flex" sec:authorize="hasRole('ROLE_SELLER')" th:if="${item.getSeller().getId()} == ${user.getId()}">
                             <div class="d-flex">
                                 <a th:href="@{/item/modify/{id} (id=${item.getId()})}">
@@ -77,6 +82,13 @@
                     </div>
                 </div>
             </div>
+            <div>
+
+                <a class="btn btn-outline-dark" th:href="@{/item/list}">
+                    <i class="bi-cart-fill me-1"></i>
+                    목록
+                </a>
+            </div>
         </section>
 
     </div>
@@ -85,9 +97,9 @@
 </html>
 <script>
 
-function insertItem() {
-    if (confirm("장바구니에 넣으시겠습니까?")) {
-        location.href = "/item/item-insert?itemId=" + document.getElementById('itemId').value;
+    function insertItem() {
+        if (confirm("장바구니에 넣으시겠습니까?")) {
+            ItemInsertForm.submit();
+        }
     }
-}
 </script>

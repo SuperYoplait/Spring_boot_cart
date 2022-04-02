@@ -2,6 +2,9 @@ package com.springdemo.cartdemo.Item;
 
 import org.springframework.data.web.PageableDefault;
 
+import com.springdemo.cartdemo.account.Account;
+import com.springdemo.cartdemo.account.CurrentUser;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -73,9 +76,17 @@ public class ItemController {
 
     //상품 장바구니에 추가
     @PostMapping("/item-insert")
-    public String item_cart_insert(Model model, @RequestParam Long id){
+    public String item_cart_insert(Model model, ItemInsertForm itemInsertForm, @CurrentUser Account account){
+        System.out.println("\n\n\n"+itemInsertForm);
+        if(account != null){
+            itemService.insertProcess(model, itemInsertForm, account);
+            return "redirect:/cart/my-cart";
+        }else {
+            model.addAttribute("error", "로그인이 필요한 페이지입니다.");
+            return "account/emailcheck";
+        }
         
-        return "redirect:/my-cart";
+        
     }
 
     @GetMapping("/item-delete")
