@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.springdemo.cartdemo.cart.Cart;
+import com.springdemo.cartdemo.cart.CartRepositroy;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
-    
+    private final CartRepositroy cartRepositroy;
     private final AccountRepositroy accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final AccountRoleRepository accountRoleRepository;
@@ -33,8 +36,13 @@ public class AccountService implements UserDetailsService {
     //회원 가입
     public void signUp(AccountSignUpForm AccountSignUpForm) {
         List<AccountRole> roles = new ArrayList<>();
-
         Optional<AccountRole> accountRole = accountRoleRepository.findById(1l);
+
+
+        Cart newCart = new Cart();
+        newCart.setId(null);
+        newCart.setSum_price(0L);
+        cartRepositroy.save(newCart);
 
         accountRole.ifPresent(role -> {
 
@@ -52,12 +60,15 @@ public class AccountService implements UserDetailsService {
                     .name(AccountSignUpForm.getName())
                     .email(AccountSignUpForm.getEmail())
                     .roles(roles)
-                    
                     .build();
             mailSend(newAccount.getEmail(), newAccount.getName(), newAccount.getToken(), newAccount.getId());            
           
             newAccount.setTokeninit();
-            accountRepository.save(newAccount);
+            newAccount.setCart(newCart);
+            System.out.println("\n\n" + newAccount.getCart().getId());
+            accountRepository.save(newAccount);            
+            
+
         });
 
     }
@@ -132,6 +143,7 @@ public class AccountService implements UserDetailsService {
                         .userid(newAccount.getUserid())
                         .password(newAccount.getPassword())
                         .name(newAccount.getName())
+                        .cart(newAccount.getCart())
                         .email(newAccount.getEmail())
                         .token(newAccount.getToken())
                         .token_bool(true)                        

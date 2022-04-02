@@ -53,10 +53,13 @@
                     </tr>
                 </tbody>
             </table>
+            <div th:if="${cartlist == null}">
+                <span>장바구니가 비었습니다.</span>
+            </div>
 
             <div>
                 <span>총 주문금액</span>
-                <span id="total-price">원</span>
+                <span th:text="${totalprice}">원</span>
             </div>
 
             <div>
