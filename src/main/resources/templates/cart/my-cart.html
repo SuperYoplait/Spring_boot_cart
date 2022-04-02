@@ -15,13 +15,9 @@
 <body>
     <div class="container">
         <form th:action="@{/payment/pay}" th:object="${payForm}" class="needs-validation" method="post">
-            <!--<span th:if="${list.TotalElements < 1 }">장바구니에 담긴 상품이 없습니다.</span>-->
-            
-            <!--<table th:if="${list.TotalElements > 0 }" class="table caption-top"> -->
             <div>
-                <button type="button" name="goods_select">
-                    <img  src="/img/unchecked-checkbox.png" width="30" height="30" alt="">
-                </button>
+                <input type="checkbox" id="myCheck">
+                <label for="myCheck"></label>
                 <span>
                     전체선택
                 </span>
@@ -40,9 +36,8 @@
                 <tbody>
                     <tr th:each=" row : ${cartlist}">
                         <td>
-                            <button type="button" name="goods_select" onclick="button_checkbox_click();">
-                                <img  src="/img/unchecked-checkbox.png" width="30" height="30" alt="">
-                            </button>
+                            <input type="checkbox" id="myCheck">
+                            <label for="myCheck"></label>
                         </td>
                         <td>상품 이미지</td>
                         <td th:text="${row.name}">상품 이름</td>
@@ -53,13 +48,14 @@
                     </tr>
                 </tbody>
             </table>
-            <div th:if="${cartlist == null}">
-                <span>장바구니가 비었습니다.</span>
-            </div>
 
+            <div th:if="${cartlist == null}" class="text-center">
+                <span>장바구니가 비었습니다. 상품을 추가 해주세요.</span>
+            </div>
             <div>
                 <span>총 주문금액</span>
-                <span th:text="${totalprice}">원</span>
+                <span th:text="${totalprice}"></span>
+                <span>원</span>
             </div>
 
             <div>
@@ -70,16 +66,3 @@
 </body>
 
 </html>
-
-<!--  class="btn btn-secondary"
-                    <tr th:each=" row : ${list}" th:onclick="'javascript: detail('+ ${row.id}+')'">
-                        <td th:text="${row.image}"></td>
-                        <td th:text="${row.name}"></td>
-                        <input type="number" value="1" min="1" max="10">
-                        <td th:text="${row.price}"></td>
-                    </tr>
-                    -->
-
-<script>
-    
-</script>

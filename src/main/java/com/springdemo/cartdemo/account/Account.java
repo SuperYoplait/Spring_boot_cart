@@ -24,7 +24,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Entity
 @Table(name = "ACCOUNT")
@@ -38,37 +37,32 @@ public class Account {
 
     @Column(unique = true)
     private String userid;
-    
+
     @Column
     private String name;
 
     @Column
     private String email;
-    
+
     @Column
     private String password;
-    
+
     @Column
     private String token;
-    
+
     @Column
     private LocalDateTime time;
-    
-    @Column //(columnDefinition = "boolean default false")
+
+    @Column // (columnDefinition = "boolean default false")
     private Boolean token_bool;
 
-    @ManyToMany(fetch = FetchType.EAGER) //권한 테이블 M:N join
-    @JoinTable(
-        name="authority",
-        joinColumns =  @JoinColumn(name="accountId"),
-        inverseJoinColumns = @JoinColumn(name="roleId")
-    )
+    @ManyToMany(fetch = FetchType.EAGER) // 권한 테이블 M:N join
+    @JoinTable(name = "authority", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     List<AccountRole> roles = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
-
 
     @PostPersist
     public void setTokeninit() { // 인증 값 생성
@@ -80,18 +74,18 @@ public class Account {
     public void setEmailTokentrue() {
         this.token_bool = true;
     }
+
     public void setEmailTokenfalse() {
         this.token_bool = false;
     }
 
-    public void setEmailTokenSendtime() { 
+    public void setEmailTokenSendtime() {
         this.time = LocalDateTime.now();
     }
 
-    public boolean canSendConfirmEmail(){
-        //return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
-        return true;//테스트용 트루임 주석처리하세요
+    public boolean canSendConfirmEmail() {
+        // return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
+        return true;// 테스트용 트루임 주석처리하세요
     }
 
-	
 }
