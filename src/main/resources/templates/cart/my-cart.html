@@ -39,12 +39,14 @@
                             <input type="checkbox" id="myCheck">
                             <label for="myCheck"></label>
                         </td>
-                        <td>상품 이미지</td>
+                        <td>
+                            <img th:src="@{${row.getImgPath()}}" height="80px;" width="80px;"/>
+                        </td>
                         <td th:text="${row.name}">상품 이름</td>
                         <td>
-                            <input type="number" value="${row.cnt}" min="1" max="10">
+                            <input type="number" th:value="${row.cnt}" min="1" max="10">
                         </td>
-                        <td>goods price</td>
+                        <td th:text="${row.price}"></td>
                     </tr>
                 </tbody>
             </table>
