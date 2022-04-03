@@ -19,14 +19,14 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final CartRepositroy cartRepository;
 
-    public void cart_list(Model model, Account account){
+    public void cart_list(Model model, Account account) {
         List<CartItem> cartItems = cartItemRepository.findByCartId(account.getCart().getId());
         Optional<Cart> select_user = cartRepository.findById(account.getCart().getId());
 
-        List<CartList> view_cartlist = new ArrayList<CartList>(); //view에 뿌려주기 위해 데이터 재 가공
+        List<CartList> view_cartlist = new ArrayList<CartList>(); // view에 뿌려주기 위해 데이터 재 가공
 
-        if(!cartItems.isEmpty()){
-            for(CartItem item : cartItems){
+        if (!cartItems.isEmpty()) {
+            for (CartItem item : cartItems) {
                 CartList temp_list_form = new CartList();
                 temp_list_form.setId(item.getId());
                 temp_list_form.setName(item.getItem().getName());
@@ -38,10 +38,8 @@ public class CartService {
 
                 view_cartlist.add(temp_list_form);
             }
-            System.out.println("\n\nmodel\n" + view_cartlist);
             model.addAttribute("cartlist", view_cartlist);
         }
-        System.out.println("\n\n 상품 가격" + select_user.get().getSum_price());
         model.addAttribute("totalprice", select_user.get().getSum_price());
     }
 }
