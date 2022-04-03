@@ -15,9 +15,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CartController {
     private final CartService cartService;
+
     @GetMapping("/my-cart")
-    public String my_cart(Model model, @CurrentUser Account account){
-       cartService.cart_list(model, account);
+    public String my_cart(Model model, @CurrentUser Account account) {
+        if (account != null) {
+            cartService.cart_list(model, account);
+        } else {
+            model.addAttribute("error", "에러발생 (로그인관련)");
+        }
         return "cart/my-cart";
     }
 }

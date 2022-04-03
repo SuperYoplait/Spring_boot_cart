@@ -4,6 +4,12 @@ import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.springdemo.cartdemo.account.Account;
+import com.springdemo.cartdemo.cart.Cart;
+import com.springdemo.cartdemo.cart.CartRepositroy;
+import com.springdemo.cartdemo.cartitem.CartItem;
+import com.springdemo.cartdemo.cartitem.CartItemRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepositroy itemRepositroy;
+    private final CartItemRepository cartitemRepositroy;
+    private final CartRepositroy cartRepositroy;
 
     public void item_view_process(Model model, Long id) { // 구매자 상세보기
         Optional<Item> item = itemRepositroy.findById(id);
@@ -26,7 +34,6 @@ public class ItemService {
         if (id != null) {
             Optional<Item> item = itemRepositroy.findById(id);
 
-            
             if (item.isPresent()) {
                 ItemForm itemForm = ItemForm.builder()
                         .id(item.get().getId())
@@ -53,7 +60,7 @@ public class ItemService {
         // UUID 를 이용하여 파일명 새로 생성
         // UUID - 서로 다른 객체들을 구별하기 위한 클래스
         UUID uuid = UUID.randomUUID();
-        String savedFileName = uuid + "_" + oriImgName; //저장될 파일명
+        String savedFileName = uuid + "_" + oriImgName; // 저장될 파일명
         imgName = savedFileName;
         File saveFile = new File(projectPath, imgName);
         imgFile.transferTo(saveFile);
@@ -82,14 +89,52 @@ public class ItemService {
                     .build();
         }
         System.out.println("\n\n" + newItem + "\n\n");
-        newItem.setSold(itemForm.isSold()); //상품 판매 선택 
+        newItem.setSold(itemForm.isSold()); // 상품 판매 선택
         itemRepositroy.save(newItem);
 
         return newItem;
     }
 
-    public void item_cart_insert(){
-        
-    }
+    public void insertProcess(Model model, ItemInsertForm itemInsertForm, Account account) {
+        Optional<Cart> addCart = cartRepositroy.findById(account.getCart().getId());
+        System.out.println("\n\n\n\n CartItemID" + account.getCart().getId());
 
+        Optional<Item> serchItem = itemRepositroy.findById(itemInsertForm.getId());
+        System.out.println("\n\n\n\n serchItem" + serchItem);
+
+        Optional<CartItem> cartItem = cartitemRepositroy.findByItemId(itemInsertForm.getId());
+        CartItem bool_item = cartItem.get();
+        Long temp_sum_price = 0L;
+
+        CartItem newCartItem;
+        if (addCart.isPresent() && serchItem.isPresent()) {
+            // cart_id, item_id 가 이미 존재 할 경우 cnt만 그만큼 증가 해야됨.
+            if (bool_item.getId() != null) {
+                newCartItem = CartItem.builder()
+                        .id(bool_item.getId())
+                        .cnt(itemInsertForm.getCount() + bool_item.getCnt())
+                        .item(serchItem.get())
+                        .cart(account.getCart())
+                        .build();
+            } else { //item_id가 없으면 기존에 item을 넣어놓은것이 없으니 새로 추가.
+                newCartItem = CartItem.builder()
+                        .cnt(itemInsertForm.getCount())
+                        .item(serchItem.get())
+                        .cart(account.getCart())
+                        .build();
+            }
+            cartitemRepositroy.save(newCartItem);
+
+            if (addCart.get().getSum_price() == 0) { // 상품 추가할 때 cart에 합계 미리 계산 해 놓음
+                temp_sum_price += (newCartItem.getCnt() * newCartItem.getItem().getPrice());
+            } else {
+                temp_sum_price = addCart.get().getSum_price();
+                temp_sum_price += (newCartItem.getCnt() * newCartItem.getItem().getPrice());
+            }
+            addCart.get().setSum_price(temp_sum_price);
+            cartRepositroy.save(addCart.get());
+        } else {
+            model.addAttribute("error", "부적절한 경로");
+        }
+    }
 }
