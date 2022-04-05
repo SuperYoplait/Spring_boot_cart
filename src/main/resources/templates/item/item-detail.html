@@ -28,6 +28,7 @@
                             <span th:text="|${item.getPrice()} 원|">아이템 가격</span>
                         </div>
                         <p class="lead" th:text="${item.getContext()}">아이템 설명</p>
+                        
                         <form th:action="@{/item/item-insert}" method="post" th:object="${itemInsertForm}">
                             <input class="form-control" type="hidden" th:field="${item.id}">          
                             <div class="d-flex">

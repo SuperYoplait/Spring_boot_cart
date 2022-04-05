@@ -1,5 +1,6 @@
 package com.springdemo.cartdemo.Item;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -7,6 +8,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.io.File;
 import java.io.FileInputStream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class ItemControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    //private ItemRepositroy itemRepositroy;
     private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    private void beforeEach_login() throws Exception {
+        System.out.println("BEFORE======================");
+        mockMvc.perform(post("/account/login")
+                .param("username", "test")
+                .param("password", "1111")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+        System.out.println("BEFORE======================");
+        
+    }
 
     @DisplayName("상품등록 - 정상")
     @Test
@@ -144,12 +159,23 @@ public class ItemControllerTest {
         
     }
 
-    /* @DisplayName("상품장바구니 저장 - 정상")
+    @DisplayName("상품장바구니 저장 - 정상")
     @Test
-    void item_insert_cart() throws Exception {
-        mockMvc.perform(
-            
-        );
+    void item_insert_cart_pass() throws Exception {
+        mockMvc.perform(post("/item/item-insert")
+                .param("id", "353")
+                .param("count", "3")
+                .with(csrf()))
+                .andExpect(status().isOk());
     }
-     */
+
+    @DisplayName("상품장바구니 저장 - 실패")
+    @Test
+    void item_insert_cart_fail() throws Exception {
+        mockMvc.perform(post("/item/item-insert")
+                .param("id", "353")
+                .param("count", "")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+    }
 }
