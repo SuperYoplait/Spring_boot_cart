@@ -7,8 +7,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import java.io.File;
 import java.io.FileInputStream;
 
-import com.springdemo.cartdemo.Item.ItemRepositroy;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import javax.transaction.Transactional;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ItemControllerTest {
@@ -27,7 +23,7 @@ public class ItemControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ItemRepositroy itemRepository;
+    //private ItemRepositroy itemRepositroy;
     private WebApplicationContext webApplicationContext;
 
     @DisplayName("상품등록 - 정상")
@@ -41,14 +37,14 @@ public class ItemControllerTest {
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        for(int i = 0; i<20; i++){
+        for(int i = 120; i<140; i++){
             mockMvc.perform(
                 multipart("/item/item-add").file(image)
-                .param("name","과일 test" + (i+1))
-                .param("context","과일 상품 설명 : " + (i+1))
+                .param("name","완구 test" + (i+1))
+                .param("context","완구 상품 설명 : " + (i+1))
                 .param("price","10000")
                 .param("count","10")
-                .param("categorie", array[1])
+                .param("categorie", array[7])
                 .param("sole","true")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());
