@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class AccountController {
 
     private final AccountService accountService;
-//    private final AccountRepositroy accountRepository;
-//    private final AccountRoleRepository accountRoleRepository;
+    private final AccountRepositroy accountRepository;
+    private final AccountRoleRepository accountRoleRepository;
     private final AccountSignUpValidator AccountSignUpValidator;
 
     @InitBinder("AccountSignUpForm")
@@ -38,10 +38,9 @@ public class AccountController {
     }
 
     @PostMapping("/sign-up")
-    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors) {
-        System.out.println("\n\n"+ signUpForm + "\n\n");
+    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors, Model model) {
         if (errors.hasErrors()) {
-            return "login/sign-up";
+            return "account/SignUp";
         }
         accountService.signUp(signUpForm);
         return "redirect:/";
