@@ -19,7 +19,10 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final CartRepositroy cartRepository;
 
-    public void cart_list(Model model, Account account) {
+    public void 
+    
+    
+    cart_list(Model model, Account account) {
         List<CartItem> cartItems = cartItemRepository.findByCartId(account.getCart().getId());
         Optional<Cart> select_user = cartRepository.findById(account.getCart().getId());
 

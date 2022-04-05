@@ -40,9 +40,12 @@ public class AccountController {
     @PostMapping("/sign-up")
     public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors, Model model) {
         if (errors.hasErrors()) {
+            model.addAttribute(Errors.class);
             return "account/SignUp";
         }
         accountService.signUp(signUpForm);
+
+        
         return "redirect:/";
     }
 
@@ -83,11 +86,11 @@ public class AccountController {
     @GetMapping("/resend_email")
     public String mail_resend(@CurrentUser Account account, Model model) {
         if(!account.canSendConfirmEmail()){
-            model.addAttribute("error", "인증 이메일은 1시간에 한번만 전송할 수 있습니다.");
-            model.addAttribute("email", account.getEmail());
+            model.addAttribute("error", "인증 이메일은 1시간에 한번만 보내드려요. :(");
+            model.addAttribute("email", "인증메일은 " + account.getEmail() + " 이에요 :)");
             return "account/emailcheck";
         } else if(account.canSendConfirmEmail()) {
-            model.addAttribute("error", "메일이 전송되었습니다!");
+            model.addAttribute("pass", account.getEmail() + "로 인증코드가 다시 한번 전송되었어요! :)");
             accountService.sendSignUpConfirmEmail(account);
             return "account/emailcheck";
         }

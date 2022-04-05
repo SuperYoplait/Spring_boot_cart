@@ -53,4 +53,16 @@ public class accountControllerTest {
                 .andExpect(status().isOk());
     }
     
+    @DisplayName("이메일 인증 - 성공")
+    @Test
+    public void emailCheck_pass() throws Exception {
+        mockMvc.perform(post("/account/sign-up")
+                .param("userid", "test12")
+                .param("password", "1")
+                .param("name", "test name")
+                .param("email", "jangbayooffcial@gmail.com")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+    
 }
