@@ -1,6 +1,6 @@
 package com.springdemo.cartdemo.account;
 
-//import javax.validation.constraints.Email;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -25,7 +25,7 @@ public class AccountSignUpForm {
     private String name;
 
     @NotBlank
-    //@Email
+    @Email
     private String email;
 
     @NotBlank

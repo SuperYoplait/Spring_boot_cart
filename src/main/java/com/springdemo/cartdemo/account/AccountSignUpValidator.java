@@ -18,14 +18,14 @@ public class AccountSignUpValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        AccountSignUpForm signupform = (AccountSignUpForm) target;
+        AccountSignUpForm accountSignUpForm = (AccountSignUpForm) target;
 
-        if (accountRepository.existsByEmail(signupform.getEmail())) {
-            errors.rejectValue("email", "invalid.email", new Object[] { signupform.getEmail() }, "이미 사용중인 이메일 입니다.");
+        if (accountRepository.existsByEmail(accountSignUpForm.getEmail())) {
+            errors.rejectValue("email", "invalid.email", new Object[] { accountSignUpForm.getEmail() }, "이미 사용중인 이메일 입니다.");
         }
 
-        if (accountRepository.existsByUserid(signupform.getUserid())) {
-            errors.rejectValue("nickname", "invalid.nickname", new Object[] { signupform.getUserid() }, "이미 사용중인 아이디 입니다.");
+        if (accountRepository.existsByUserid(accountSignUpForm.getUserid())) {
+            errors.rejectValue("userid", "invalid.userid", new Object[] { accountSignUpForm.getUserid() }, "이미 사용중인 아이디 입니다.");
         }
     }
 }

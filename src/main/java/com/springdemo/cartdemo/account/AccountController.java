@@ -2,7 +2,6 @@ package com.springdemo.cartdemo.account;
 
 import javax.validation.Valid;
 
-//import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -27,22 +26,25 @@ public class AccountController {
 
     @InitBinder("AccountSignUpForm")
     public void InitBinder(WebDataBinder webDataBinder) {
+        System.out.println("\n바인딩 ------- 바인딩\n");
         webDataBinder.addValidators(AccountSignUpValidator);
     }
 
     // 회원가입
     @GetMapping("/sign-up")
     public String SignUp_GET(Model model) {
-        model.addAttribute("signUpForm", new AccountSignUpForm());
+        model.addAttribute("AccountSignUpForm", new AccountSignUpForm());
         return "account/SignUp";
     }
 
     @PostMapping("/sign-up")
-    public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors, Model model) {
+    public String SignUp_POST(@Valid AccountSignUpForm accountSignUpForm, Errors errors, Model model) {
+        System.out.println("\n\n" + errors.getAllErrors());
         if (errors.hasErrors()) {
+            model.addAttribute("AccountSignUpForm", accountSignUpForm);
             return "account/SignUp";
         }
-        accountService.signUp(signUpForm);
+        accountService.signUp(accountSignUpForm);
         return "redirect:/";
     }
 

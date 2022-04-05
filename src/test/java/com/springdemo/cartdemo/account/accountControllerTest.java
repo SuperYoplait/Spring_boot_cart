@@ -52,5 +52,36 @@ public class accountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
     }
+
+    @DisplayName("로그인 - 성공")
+    @Test
+    public void Login_pass() throws Exception {
+        mockMvc.perform(post("/account/login")
+                .param("username", "test")
+                .param("password", "1111")
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @DisplayName("로그인 - 실패")
+    @Test
+    public void Login_fail() throws Exception {
+        mockMvc.perform(get("/account/login?error")
+                .param("username", "test")
+                .param("password", "1234")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("이메일 인증 - 성공")
+    @Test
+    public void Email_pass() throws Exception {
+        
+    }
     
+    @DisplayName("이메일 인증 - 실패")
+    @Test
+    public void Email_fail() throws Exception {
+        
+    }
 }
