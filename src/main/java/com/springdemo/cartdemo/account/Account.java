@@ -84,7 +84,7 @@ public class Account {
     }
 
     public boolean canSendConfirmEmail() {
-        // return this.emailTokenSendAt.isBefore(LocalDateTime.now().minusHours(1));
+         //return this.time.isBefore(LocalDateTime.now().minusHours(1));
         return true;// 테스트용 트루임 주석처리하세요
     }
 

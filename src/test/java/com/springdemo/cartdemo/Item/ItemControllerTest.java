@@ -32,7 +32,8 @@ public class ItemControllerTest {
         String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
         String fileName = "imgFile";
         //File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png");
-        File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png");
+        File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png");
+        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png");
         
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
@@ -45,16 +46,19 @@ public class ItemControllerTest {
                 .param("price","10000")
                 .param("count","10")
                 .param("categorie", array[7])
-                .param("sole","true")
+                .param("sold","true")
                 .with(csrf()))
                 .andExpect(status().is3xxRedirection());
         }
         
     }
 
-    @DisplayName("상품장바구니 저장 - 정상")
+    /* @DisplayName("상품장바구니 저장 - 정상")
     @Test
     void item_insert_cart() throws Exception {
+        mockMvc.perform(
+            
+        );
     }
-    
+     */
 }
