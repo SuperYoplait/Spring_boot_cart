@@ -9,6 +9,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
+   
 
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -29,12 +30,17 @@
           <li class="nav-item">
             <a class="nav-link" href="/cart/my-cart">장바구니</a>
           </li>
-          <div class="dropdown">
+          <div  th:if="${account} == null">
+          <li class="nav-item">
+            <a class="nav-link" href="/account/login">로그인하러가기</a>
+          </li>
+          </div>
+          <div class="dropdown" th:if="${account?.id} != null">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
               data-bs-toggle="dropdown" aria-expanded="false" sec:authentication="name">
               비로그인사용자
             </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" >
               <li><a class="dropdown-item active" href="/account/sign-up">회원가입</a></li>
               <li><a class="dropdown-item" th:if="${account?.userid} != null" th:href="@{/account/info} ">회원정보수정</a></li><!--${#authentication.name} -->
               <!-- <li><a class="dropdown-item" href="#">깡통</a></li> -->

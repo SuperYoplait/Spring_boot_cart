@@ -16,8 +16,8 @@
     <div class="container">
         <form th:action="@{/payment/pay}" th:object="${payForm}" class="needs-validation" method="post">
             <div>
-                <input type="checkbox" id="myCheck">
-                <label for="myCheck"></label>
+                <input type="checkbox" id="myCheckall" style='text-align:center' checked="checked" onclick='selectAll(this)'>
+                <label for="myCheckall"></label>
                 <span>
                     전체선택
                 </span>
@@ -25,34 +25,37 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">상품선택</th>
-                        <th scope="col">상품정보</th>
-                        <th scope="col">상품이름</th>
-                        <th scope="col">수량</th>
-                        <th scope="col">가격</th>
+                        <th scope="col" style =' vertical-align : middle;  text-align: center; '>상품선택</th>
+                        <th scope="col" style =' vertical-align : middle;  text-align: center; '>상품정보</th>
+                        <th scope="col" style =' vertical-align : middle;  text-align: center; '>상품이름</th>
+                        <th scope="col" style =' vertical-align : middle;  text-align: center; '>수량</th>
+                        <th scope="col" style =' vertical-align : middle;  text-align: center; '>가격</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr th:each=" row : ${cartlist}">
-                        <td>
-                            <input type="checkbox" id="myCheck">
+                        <td style =' vertical-align : middle;  text-align: center; '>
+                           
+                            <input type="checkbox" id="myCheck" name="checkedVal" th:value="${row.id}" style="vertical-align:middle" checked="checked">
                             <label for="myCheck"></label>
+                            
                         </td>
-                        <td>
-                            <img th:src="@{${row.getImgPath()}}" height="80px;" width="80px;"/>
+                        <td style =' vertical-align : middle;  text-align: center; '>
+                            <img th:src="@{${row.getImgPath()}}" height="80px;" width="80px;" />
                         </td>
-                        <td th:text="${row.name}">상품 이름</td>
-                        <td>
+                        <td th:text="${row.name}" style =' vertical-align : middle;  text-align: center; '>상품 이름</td>
+                        <td style =' vertical-align : middle;  text-align: center; '>
                             <input type="number" th:value="${row.cnt}" min="1" max="10">
                         </td>
-                        <td th:text="${row.price}"></td>
+                        <td th:text="${row.price}" style =' vertical-align : middle;  text-align: center; '></td>
+
                     </tr>
                 </tbody>
             </table>
 
             <div th:if="${cartlist == null}" class="text-center">
-                <span>장바구니가 비었습니다. 상품을 추가 해주세요.</span>
+                <span>텅</span>
             </div>
             <div>
                 <span>총 주문금액</span>
@@ -68,3 +71,15 @@
 </body>
 
 </html>
+
+<script>
+
+function selectAll(selectAll)  {
+  const checkboxes 
+       = document.getElementsByName('checkedVal');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  })
+}
+</script>

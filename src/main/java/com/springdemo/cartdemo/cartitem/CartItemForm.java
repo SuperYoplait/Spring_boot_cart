@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemForm {
-    private Long id;
+    private Long id; //몇 번째 물건
 
     private Long cnt;
 
