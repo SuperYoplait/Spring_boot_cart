@@ -95,14 +95,17 @@ public class ItemService {
         return newItem;
     }
 
-    public void insertProcess(Model model, ItemInsertForm itemInsertForm, Account account) {
+    public void insertProcess(ItemInsertForm itemInsertForm, Account account) {
+        System.out.println("\n\n" + account.getId());
+        System.out.println("\n\n" + account.getCart().getId());
+        
         Optional<Cart> addCart = cartRepositroy.findById(account.getCart().getId());
         System.out.println("\n\n\n\n CartItemID" + account.getCart().getId());
 
-        Optional<Item> serchItem = itemRepositroy.findById(itemInsertForm.getId());
+        Optional<Item> serchItem = itemRepositroy.findById(itemInsertForm.getItemId());
         System.out.println("\n\n\n\n serchItem" + serchItem);
 
-        Optional<CartItem> cartItem = cartitemRepositroy.findByItemId(itemInsertForm.getId());
+        Optional<CartItem> cartItem = cartitemRepositroy.findByItemId(itemInsertForm.getItemId());
 
         Long temp_sum_price = 0L;
 
@@ -115,13 +118,13 @@ public class ItemService {
                 bool_item = cartItem.get();
                 newCartItem = CartItem.builder()
                         .id(bool_item.getId())
-                        .cnt(itemInsertForm.getCount() + bool_item.getCnt())
+                        .cnt(itemInsertForm.getCnt() + bool_item.getCnt())
                         .item(serchItem.get())
                         .cart(account.getCart())
                         .build();
             } else { // item_id가 없으면 기존에 item을 넣어놓은것이 없으니 새로 추가.
                 newCartItem = CartItem.builder()
-                        .cnt(itemInsertForm.getCount())
+                        .cnt(itemInsertForm.getCnt())
                         .item(serchItem.get())
                         .cart(account.getCart())
                         .build();
@@ -136,8 +139,6 @@ public class ItemService {
             }
             addCart.get().setSum_price(temp_sum_price);
             cartRepositroy.save(addCart.get());
-        } else {
-            model.addAttribute("error", "부적절한 경로");
         }
     }
 }
