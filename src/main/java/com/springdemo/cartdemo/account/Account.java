@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PostPersist;
-import javax.persistence.Table;
 
 import com.springdemo.cartdemo.cart.Cart;
 
@@ -26,7 +25,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "ACCOUNT")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,31 +36,24 @@ public class Account {
     @Column(unique = true)
     private String userid;
 
-    @Column
     private String name;
 
-    @Column
     private String email;
 
-    @Column
     private String password;
 
-    @Column
     private String token;
 
-    @Column
     private LocalDateTime time;
 
-    @Column // (columnDefinition = "boolean default false")
     private Boolean token_bool;
+
+    @OneToOne
+    private Cart cart;
 
     @ManyToMany(fetch = FetchType.EAGER) // 권한 테이블 M:N join
     @JoinTable(name = "authority", joinColumns = @JoinColumn(name = "accountId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     List<AccountRole> roles = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
 
     @PostPersist
     public void setTokeninit() { // 인증 값 생성

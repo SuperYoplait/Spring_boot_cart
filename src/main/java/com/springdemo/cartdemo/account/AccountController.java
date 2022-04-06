@@ -20,8 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class AccountController {
 
     private final AccountService accountService;
-    private final AccountRepositroy accountRepository;
-    private final AccountRoleRepository accountRoleRepository;
     private final AccountSignUpValidator AccountSignUpValidator;
 
     @InitBinder("accountSignUpForm")
