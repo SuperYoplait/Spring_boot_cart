@@ -19,10 +19,7 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final CartRepositroy cartRepository;
 
-    public void 
-    
-    
-    cart_list(Model model, Account account) {
+    public void cart_list(Model model, Account account) {
         List<CartItem> cartItems = cartItemRepository.findByCartId(account.getCart().getId());
         Optional<Cart> select_user = cartRepository.findById(account.getCart().getId());
 
@@ -38,6 +35,9 @@ public class CartService {
                 temp_list_form.setCnt(item.getCnt());
                 temp_list_form.setOption(item.getItem().getOption());
                 temp_list_form.setPrice(item.getItem().getPrice());
+               
+                
+                
 
                 view_cartlist.add(temp_list_form);
             }
