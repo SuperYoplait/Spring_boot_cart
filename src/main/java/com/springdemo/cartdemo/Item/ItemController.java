@@ -1,6 +1,7 @@
 package com.springdemo.cartdemo.Item;
 
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 
 import com.springdemo.cartdemo.account.Account;
 import com.springdemo.cartdemo.account.CurrentUser;
@@ -10,18 +11,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
+import static com.springdemo.cartdemo.Item.ItemController.ROOT;
+import static com.springdemo.cartdemo.Item.ItemController.ITEM;
+
 @Controller
-@RequestMapping("/item")
+@RequestMapping(ROOT + ITEM)
 @RequiredArgsConstructor
 public class ItemController {
+    public static final String ROOT = "/";
+    public static final String ITEM = "item";
 
     private final ItemRepositroy itemRepositroy;
     private final ItemService itemService;
@@ -55,8 +62,8 @@ public class ItemController {
     }
 
     //상품상세보기
-    @GetMapping("/detail/{itemId}")
-    public String item_detail(Model model, @PathVariable("itemId") Long id) {
+    @GetMapping("/detail")
+    public String item_detail(Model model, @RequestParam Long id) {
         itemService.item_view_process(model, id);
         return "item/item-detail";
     }
@@ -75,18 +82,14 @@ public class ItemController {
     }
 
     //상품 장바구니에 추가
-    @PostMapping("/item-insert")
-    public String item_cart_insert(Model model, ItemInsertForm itemInsertForm, @CurrentUser Account account){
-        System.out.println("\n\n\n"+itemInsertForm);
+    @PostMapping("/init-cart")
+    @ResponseBody
+    public ResponseEntity item_cart_insert(@RequestBody ItemInsertForm itemInsertForm, @CurrentUser Account account){
         if(account != null){
-            itemService.insertProcess(model, itemInsertForm, account);
-            return "redirect:/cart/my-cart";
-        }else {
-            model.addAttribute("error", "로그인이 필요한 페이지입니다.");
-            return "account/emailcheck";
-        }
-        
-        
+            itemService.insertProcess(itemInsertForm, account);
+            return ResponseEntity.ok().build();
+        } else
+            return (ResponseEntity) ResponseEntity.status(404);
     }
 
     @GetMapping("/item-delete")

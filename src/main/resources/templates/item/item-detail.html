@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-</html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"></html>
 
 <head>
     <meta charset="UTF-8">
@@ -21,86 +18,56 @@
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="@{${item.getImgPath()}}"
                             alt="..." /></div>
-                    
+
                     <div class="col-md-6">
                         <h1 class="display-5 fw-bolder" th:text="${item.getName()}">상품 이름</h1>
                         <div class="fs-5 mb-5">
                             <span th:text="|${item.getPrice()} 원|">아이템 가격</span>
                         </div>
                         <p class="lead" th:text="${item.getContext()}">아이템 설명</p>
-                        
-                        <form th:action="@{/item/item-insert}" method="post" th:object="${itemInsertForm}">
-                            <input class="form-control" type="hidden" th:field="${item.id}">          
-                            <div class="d-flex">
-                                <!-- <a th:href="@{/account/login}">
-                                <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                    구매하기
-                                </button>
-                            </a> -->
-                                
-                            <label for="count" class="form-label">남은 수량
-                                <input class="form-control" type="number" value="1" min="1" max ="10" name="count" id="count" required>
+
+                        <input class="form-control" type="hidden" th:field="${item.id}">
+                        <div class="d-flex">
+                            <label for="count" class="form-label">수량
+                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg " name="optionCnt" id="cnt">
+                                    <option th:each=" i : ${#numbers.sequence(1,10)}" th:text="${i}" ></option>
+                                </select>
                             </label>
+                        </div>
 
-                                <button class="btn btn-outline-dark" type= "submit">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    장바구니에 담기
-                                </button>
-                        </form>
-
-                        
-                        <!--                    시큐리티 먹이면 할 거
-                        <form class="d-flex" sec:authorize="hasRole('ROLE_SELLER')" th:if="${item.getSeller().getId()} == ${user.getId()}">
-                            <div class="d-flex">
-                                <a th:href="@{/item/modify/{id} (id=${item.getId()})}">
-                                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                        상품 수정
-                                    </button>
-                                </a>
-                                <a th:href="@{/item/delete/{id} (id=${item.getId()})}">
-                                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                        상품 삭제
-                                    </button>
-                                </a>
-                            </div>
-                        </form>
--->
-                        <!--
-                        <form class="d-flex" sec:authorize="!isAuthenticated()">
-                            <div class="d-flex">
-                                <a th:href="@{/signin}">
-                                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                        구매하기
-                                    </button>
-                                </a>
-                                <a class="btn btn-outline-dark" th:href="@{/signin}">
-                                    <i class="bi-cart-fill me-1"></i>
-                                    장바구니
-                                </a>
-                            </div>
-                        </form>
-                        -->
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-primary" onclick="cart();">장바구니 담기</button>
+                            <button type="button" class="btn btn-success">바로 구매하기</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div>
-
-                <a class="btn btn-outline-dark" th:href="@{/item/list}">
-                    <i class="bi-cart-fill me-1"></i>
-                    목록
-                </a>
-            </div>
+                <div>
+                    <a class="btn btn-outline-dark" th:href="@{/item/list}">
+                        <i class="bi-cart-fill me-1"></i>
+                        목록
+                    </a>
+                </div>
         </section>
 
     </div>
 </body>
 
 </html>
+<script th:replace="fragments/cm_top.html :: csrfReady"></script>
 <script>
+    function cart() {
+        let itemId = $("#id").val();
+        let cnt = $("#cnt").val();
 
-    function insertItem() {
-        if (confirm("장바구니에 넣으시겠습니까?")) {
-            ItemInsertForm.submit();
-        }
+        $.ajax({
+            type: "post",
+            url: "/item/init-cart",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ "itemId": itemId, "cnt": cnt }),
+            dataType: "json",
+            success: function (response) {
+                console.log(response);
+            }
+        });
     }
 </script>

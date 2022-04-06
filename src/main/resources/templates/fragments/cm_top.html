@@ -1,5 +1,8 @@
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
   <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+
+  <meta th:if="${metaParam =='csrf' }" name="_csrf" th:content="${_csrf.token}" />
+  <meta th:if="${metaParam =='csrf' }" name="_csrf_header" th:content="${_csrf.headerName}" />
   
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -53,3 +56,14 @@
   </nav>
 
 </header>
+
+<script type="application/javascript" th:fragment="csrfReady">
+  $(function () {
+    var csrfToken = "[[${_csrf.token}]]";
+    var csrfHeader = "[[${_csrf.headerName}]]";
+    $(document).ajaxSend(function (e, xhr, options) {
+      console.log(csrfHeader);
+      xhr.setRequestHeader(csrfHeader, csrfToken);
+    });
+  });
+</script>
