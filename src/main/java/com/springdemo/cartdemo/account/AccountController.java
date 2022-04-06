@@ -24,7 +24,7 @@ public class AccountController {
     private final AccountRoleRepository accountRoleRepository;
     private final AccountSignUpValidator AccountSignUpValidator;
 
-    @InitBinder("AccountSignUpForm")
+    @InitBinder("accountSignUpForm")
     public void InitBinder(WebDataBinder webDataBinder) {
         System.out.println("\n바인딩 ------- 바인딩\n");
         webDataBinder.addValidators(AccountSignUpValidator);
@@ -33,7 +33,7 @@ public class AccountController {
     // 회원가입
     @GetMapping("/sign-up")
     public String SignUp_GET(Model model) {
-        model.addAttribute("AccountSignUpForm", new AccountSignUpForm());
+        model.addAttribute("accountSignUpForm", new AccountSignUpForm());
         return "account/SignUp";
     }
 
@@ -41,7 +41,6 @@ public class AccountController {
     public String SignUp_POST(@Valid AccountSignUpForm accountSignUpForm, Errors errors, Model model) {
         System.out.println("\n\n" + errors.getAllErrors());
         if (errors.hasErrors()) {
-            model.addAttribute("AccountSignUpForm", accountSignUpForm);
             return "account/SignUp";
         }
         accountService.signUp(accountSignUpForm);
