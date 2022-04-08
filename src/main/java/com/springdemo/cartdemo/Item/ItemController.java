@@ -84,12 +84,9 @@ public class ItemController {
     //상품 장바구니에 추가
     @PostMapping("/init-cart")
     @ResponseBody
-    public ResponseEntity item_cart_insert(@RequestBody ItemInsertForm itemInsertForm, @CurrentUser Account account){
-        if(account != null){
-            itemService.insertProcess(itemInsertForm, account);
-            return ResponseEntity.ok().build();
-        } else
-            return (ResponseEntity) ResponseEntity.status(404);
+    public ResponseEntity<String> item_cart_insert(@RequestBody ItemInsertForm itemInsertForm, @CurrentUser Account account){
+        itemService.insertProcess(itemInsertForm, account);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/item-delete")

@@ -32,13 +32,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import org.springframework.http.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springdemo.cartdemo.account.Account;
-import com.springdemo.cartdemo.account.AccountRepositroy;
-import com.springdemo.cartdemo.account.AccountService;
-import com.springdemo.cartdemo.account.AccountSignUpForm;
-import com.springdemo.cartdemo.Item.ItemInsertForm;
-
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -49,34 +42,23 @@ public class ItemControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-    private AccountService accountService;
-    private AccountRepositroy accountRepository;
-    private ObjectMapper objectMapper;
 
-    @BeforeEach
+    @BeforeEach //Test ID생성
     private void beforeEach_login() throws Exception {
-        System.out.println("BEFORE======================");
-        /*
+        System.out.println("BEFORE===========================================================\n\n");
         mockMvc.perform(post("/account/sign-up")
                 .param("userid", "test123")
                 .param("password", "1111")
                 .param("name", "test name")
                 .param("email", "jangbayooffcial@gmail.com")
                 .with(csrf()))
-                .andExpect(status().is3xxRedirection());*/
-        //==================================================================//
-        mockMvc.perform(post("/account/login")
-                .param("username", "test")
-                .param("password", "1111")
-                .with(csrf()))
                 .andExpect(status().is3xxRedirection());
-
-        System.out.println("BEFORE======================");
+        System.out.println("BEFORE===========================================================\n\n");
     }
 
     @AfterEach
     private void AfterEach(){
-        System.out.println("AFTER======================");
+        System.out.println("AFTER============================================================\n\n");
     }
 
     @DisplayName("상품등록 - 정상")
@@ -107,32 +89,21 @@ public class ItemControllerTest {
 
     @DisplayName("상품장바구니 담기 - 정상")
     @Test
-    @WithUserDetails(value = "test", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void item_insert_cart_pass() throws Exception {
-        //Account account = accountRepository.findByUserid("test");
-
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("\n\nTEST============================================================\n\n");
         ItemInsertForm itemInsertForm = ItemInsertForm.builder()
-                                        .itemId(1L)
-                                        .cnt(1L)
-                                        .build();
-        System.out.println("\n\n" + itemInsertForm);
-        //                    "/" + "item"
-        mockMvc.perform(post(ROOT + ITEM + "/init-cart")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(itemInsertForm))
-                        .with(csrf())
-        )
-                        .andExpect(status().isOk())
-                        .andExpect(authenticated().withUsername("test"));
-    }
+                .itemId(1L)
+                .cnt(1L)
+                .build();
 
-    @DisplayName("상품장바구니 저장 - 실패")
-    @Test
-    void item_insert_cart_fail() throws Exception {
-        mockMvc.perform(post("/item/item-insert")
-                .param("id", "353")
-                .param("count", "")
-                .with(csrf()))
-                .andExpect(status().is3xxRedirection());
+        mockMvc.perform(post(ROOT + ITEM + "/init-cart")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(itemInsertForm))
+                .with(csrf())
+                )
+                .andExpect(status().isOk())
+                .andExpect(authenticated().withUsername("test123"));
     }
 }
