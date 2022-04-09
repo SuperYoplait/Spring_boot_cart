@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<header th:replace="fragments/cm_top.html"></header>
+
+<body>
+    <div class="container">
+
+        <form class="row g-3" th:action="@{/account/auth-update}" method="get">
+            <div class="col-auto">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="아이디 검색 : " disabled>
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" id="searchText" placeholder="아이디를 입력하세요!" name="searchText"
+                    required th:value="${searchText}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">검색</button>
+            </div>
+        </form>
+
+        <table class="table table-striped">
+            <thead>
+                <th>항목</th>
+                <th>내용</th>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>아이디</td>
+                    <td th:text="${searchText} ? ${searchText} : '-' ">admin</td>
+                </tr>
+                <tr th:if="${auth != null } ">
+                    <td>보유권한</td>
+                    <td>
+                        <span th:each=" role: ${auth}">
+                            <span th:text="${role.rolename}"></span> /
+                        </span>
+                    </td>
+                </tr>
+
+                <tr th:if="${allAuth != null } ">
+                    <td>권한 종류</td>
+                    <td>
+                        <span th:each=" role: ${allAuth}">
+                            <button type="button" class="btn btn-outline-info authBtn" th:text="${role.rolename}"
+                                th:value="${role.id}" name=""> Info</button>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="hidden" id="userid" th:value="${searchText}">
+
+        <button type="button" class="btn btn-success" th:classappend="${auth} == null ? 'disabled' : '' "
+            onclick="result();">권한 수정하기</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('.authBtn').click(function () {
+            if ($(this).hasClass("btn-outline-info")) {
+                $(this).removeClass("btn-outline-info");
+                $(this).addClass("btn-info");
+            } else if ($(this).hasClass("btn-info")) {
+                $(this).removeClass("btn-info");
+                $(this).addClass("btn-outline-info");
+            }
+        });
+    });
+
+    function result() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        let arr = new Array();
+        $(".btn-info").each(function () {
+            arr.push(this.value);
+        });
+        $.ajax({
+            type: "post",
+            contentType: 'application/json',
+            url: "/account/auth-update/" + $("#userid").val(),
+            data: JSON.stringify(arr),
+            dataType: "json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (response) {
+                console.log(response);
+                alert('권한이 수정되었습니다!');
+
+            },
+            error: function (e) {
+                console.log("error" + arr);
+            }
+        });
+    }
+</script>

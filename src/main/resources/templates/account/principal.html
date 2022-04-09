@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>권한확인</title>
+</head>
+
+<header th:replace="fragments/cm_top.html"></header>
+
+<body>
+    <h1>thymeleaf property로 구성된 spring security principal</h1>
+    <h2>[principal]</h2>
+    <h4><span sec:authentication="principal"></span></h2>
+    <h2>[name]</h2>
+    <h4><span sec:authentication="name"></span></h2>
+    <h2>[roles]</h2>
+    <h4><span sec:authentication="principal.authorities"></span></h2>
+
+    <h3 sec:isAuthenticated()>당신은 인증받았습니다.</h3>
+    <h3 sec:authorize="hasRole('ROLE_TEMP_USER')">당신은 임시 사용자 입니다. 권한이름은 ROLE_TEMP_USER</h3>
+    <h3 sec:authorize="hasRole('ROLE_USER')">당신은 사용자 입니다. 권한이름은 ROLE_USER</h3>
+    <h3 sec:authorize="hasRole('ROLE_SELLER')">당신은 판매자 입니다. 권한이름은 ROLE_SELLER</h3>
+    <h3 sec:authorize="hasRole('ROLE_ADMIN')">당신은 관리자 입니다. 권한이름은 ROLE_ADMIN</h3>
+
+</body>
+
+</html>

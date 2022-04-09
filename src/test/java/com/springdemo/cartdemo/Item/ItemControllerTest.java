@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,7 +43,7 @@ public class ItemControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @BeforeEach //Test ID생성
+    @BeforeEach //Test ID Login
     private void beforeEach_login() throws Exception {
         System.out.println("BEFORE===========================================================\n\n");
         mockMvc.perform(post("/account/sign-up")

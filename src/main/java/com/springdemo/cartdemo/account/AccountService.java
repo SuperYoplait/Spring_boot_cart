@@ -131,7 +131,7 @@ public class AccountService implements UserDetailsService {
 
     public void signupProcess(Model model, String token, Long userid) { // 이메일 인증 프로세스
         if (userid != null) {
-            List<Long> auth = new ArrayList<>() { //일반 사용자가 이메일 인증 했을 때 권한
+            List<Long> auth = new ArrayList<>() { //임시 사용자가 이메일 인증 했을 때 권한
                 {
                     add(1L);
                     add(2L);
@@ -180,5 +180,12 @@ public class AccountService implements UserDetailsService {
                 model.addAttribute("infoForm", infoForm);
             }
         }
+    }
+
+    public Account authRoleUpdate(List<Long> authorities, String userid) {
+        List<AccountRole> accountRoles = accountRoleRepository.findByIdIn(authorities);
+        Account user = accountRepository.findByUserid(userid);
+        user.setRoles(accountRoles);
+        return accountRepository.save(user);
     }
 }

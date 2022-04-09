@@ -4,6 +4,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 
 import com.springdemo.cartdemo.account.Account;
+import com.springdemo.cartdemo.account.AccountRole;
 import com.springdemo.cartdemo.account.CurrentUser;
 
 import org.springframework.data.domain.Page;
@@ -21,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 
 import static com.springdemo.cartdemo.Item.ItemController.ROOT;
+
+import java.util.List;
+
 import static com.springdemo.cartdemo.Item.ItemController.ITEM;
 
 @Controller
@@ -70,9 +74,22 @@ public class ItemController {
 
     //상품 등록
     @GetMapping("/item-add") //권한에 막혀야됨 - 일반 구매자 접근 제한 - 판매자, 관리자만 접근 가능
-    public String item_add(Model model, @RequestParam(required = false) Long id) {
-        itemService.new_item_process(model, id);
-        return "item/item-insert";
+    public String item_add(Model model, @RequestParam(required = false) Long id, @CurrentUser Account account) {
+        if(account != null){
+            List<AccountRole> roles = account.getRoles();
+            for(AccountRole role : roles){
+                if(role.getRole().equals("ROLE_SELLER")){
+                    itemService.new_item_process(model, id);
+                    return "item/item-insert";
+                }
+            }
+            System.out.println("\n\n 권한 없음");
+            return "redirect:/item/list";
+        }
+        else{
+            System.out.println("\n\n 로그인 먼저 진행 해야함");
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/item-add")
