@@ -2,7 +2,6 @@ package com.springdemo.cartdemo.account;
 
 import javax.validation.Valid;
 
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -39,7 +38,7 @@ public class AccountController {
     public String SignUp_POST(@Valid AccountSignUpForm signUpForm, Errors errors){
        
         if (errors.hasErrors()) {
-            return "login/sign-up";
+            return "account/SignUp";
         }
 
         accountService.signUp(signUpForm);  
