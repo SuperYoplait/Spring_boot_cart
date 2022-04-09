@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 public class Payment {
     @Id
     @GeneratedValue
+    private Long idx;
+
     private Long id;
 
     private Long cart_id;
@@ -32,7 +34,7 @@ public class Payment {
 
     private boolean state;
 
-    private String way;
+    private String addres;
 
-    private String card;
+    private String log;
 }

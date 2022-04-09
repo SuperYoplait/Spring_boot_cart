@@ -1,8 +1,12 @@
 <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="/node_modules/jquery/dist/jquery.min.js"></script> -->
+  
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
   <meta th:if="${metaParam =='csrf' }" name="_csrf" th:content="${_csrf.token}" />
   <meta th:if="${metaParam =='csrf' }" name="_csrf_header" th:content="${_csrf.headerName}" />
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -33,13 +37,13 @@
           <li class="nav-item">
             <a class="nav-link" href="/cart/my-cart">장바구니</a>
           </li>
-          <div  th:if="${account} == null">
+          <div  sec:authorize="isAnonymous()">
           <li class="nav-item">
             <a class="nav-link" href="/account/login">로그인하러가기</a>
           </li>
           </div>
-          <div class="dropdown" th:if="${account?.id} != null">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+          <div class="dropdown" sec:authorize="isAuthenticated()">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton2"
               data-bs-toggle="dropdown" aria-expanded="false" sec:authentication="name">
               비로그인사용자
             </button>
