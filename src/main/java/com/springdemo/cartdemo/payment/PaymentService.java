@@ -17,9 +17,9 @@ import lombok.RequiredArgsConstructor;
 public class PaymentService {
     public void paymentProcess(@CurrentUser Account account, Model model, List<String> checkedVal) {
 
-        for (String idx : checkedVal) {
+        // for (String idx : checkedVal) { //박준호 바보
         
-        }
+        // }
     }
     
 }
