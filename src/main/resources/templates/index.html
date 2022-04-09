@@ -30,6 +30,17 @@
                     로그인 하러 가기
                 </a>
             </div>
+
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <a href="/account/info" class="btn btn-secondary">
+                    <img src="/img/join.png" width="80" height="80">
+                    내 정보
+                </a>
+                <a onclick="document.getElementById('logoutbutten').submit();">로그아웃</a>
+                <form id="logoutbutten" th:action="@{/logout}" method="post">
+                  <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}" />
+              </form>
+            </div>
         </div>
     </section>
 
