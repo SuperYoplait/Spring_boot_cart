@@ -43,6 +43,7 @@ public class PaymentService {
             String idFormat = idFormat1.format(System.currentTimeMillis()) + Integer.toString(((int) Math.random() * 100));
             Payment newPaymentForm = new Payment();
             newcartitem = cartItemRepository.findById(Long.parseLong(idx)).get();
+
             
             newPaymentForm.setIdx(UUID.randomUUID());
             newPaymentForm.setPayment_id(Long.parseLong(idFormat));

@@ -129,7 +129,7 @@ public class AccountService implements UserDetailsService {
         account.setEmailTokenSendtime(); // 보낸시간 찍고
     }
 
-    public void signupProcess(Model model, String token, Long userid) { // 이메일 인증 프로세스
+    public void signupProcess(Model model, String token, String userid) { // 이메일 인증 프로세스
         if (userid != null) {
             List<Long> auth = new ArrayList<>() { //임시 사용자가 이메일 인증 했을 때 권한
                 {
@@ -139,7 +139,7 @@ public class AccountService implements UserDetailsService {
             };
             List<AccountRole> roles = accountRoleRepository.findByIdIn(auth);
 
-            Optional<Account> Accountop = accountRepository.findById(userid);
+            Optional<Account> Accountop = accountRepository.findById(Long.parseLong(userid));
             if (Accountop.get().getToken().equals(token)) {
                 Account newAccount = Accountop.get();
 
@@ -157,6 +157,7 @@ public class AccountService implements UserDetailsService {
                 accountRepository.save(newAccount);
                 model.addAttribute("name", newAccount.getName());
                 model.addAttribute("id", newAccount.getId());
+                model.addAttribute("pass", "pass");
                 System.out.println("인증완료");
             } else
                 model.addAttribute("error", "worng token!");
