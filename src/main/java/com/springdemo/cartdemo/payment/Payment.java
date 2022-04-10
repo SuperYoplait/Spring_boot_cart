@@ -29,11 +29,13 @@ public class Payment {
 
     private Long cart_id;
 
-    private Long goods_id;
+    private String account_id;
 
-    private String goods_name;
+    private Long item_id;
 
-    private String goods_option;
+    private String item_name;
+
+    private String item_option;
 
     private Long price;
 

@@ -46,13 +46,14 @@ public class PaymentService {
             
             newPaymentForm.setIdx(UUID.randomUUID());
             newPaymentForm.setPayment_id(Long.parseLong(idFormat));
-            newPaymentForm.setGoods_id(newcartitem.getItem().getId());
+            newPaymentForm.setItem_id(newcartitem.getItem().getId());
             newPaymentForm.setCart_id(newcartitem.getCart().getId());
-            newPaymentForm.setGoods_name(newcartitem.getItem().getName());
-            newPaymentForm.setGoods_option(newcartitem.getItem().getOption());
+            newPaymentForm.setItem_name(newcartitem.getItem().getName());
+            newPaymentForm.setItem_option(newcartitem.getItem().getOption());
             newPaymentForm.setPrice(newcartitem.getItem().getPrice() * newcartitem.getCnt());
             newPaymentForm.setCnt(newcartitem.getCnt());
             newPaymentForm.setTime(LocalDateTime.now());
+            newPaymentForm.setAccount_id(account.getUserid());
             newPaymentForm.setState(true);
 
             newPayments.add(newPaymentForm);
@@ -60,7 +61,7 @@ public class PaymentService {
 
             totalprice += newPaymentForm.getPrice();
             if (firstItem == null) {
-                firstItem = newPaymentForm.getGoods_name();
+                firstItem = newPaymentForm.getItem_name();
             }
             checkedPay++;
         }
