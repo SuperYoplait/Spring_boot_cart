@@ -25,7 +25,6 @@ public class PaymentController {
     public String Payment(@CurrentUser Account account, Model model, @RequestParam List<String> checkedVal) {
         if(!checkedVal.isEmpty()) {
             paymentservice.paymentProcess(account, model, checkedVal);
-
             return "payment/Payment";
         }
         model.addAttribute("error", "부적절한 경로입니다. :(");
