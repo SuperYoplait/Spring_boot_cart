@@ -11,11 +11,7 @@
 
 <header th:replace="fragments/cm_top.html"></header>
 
-
-
-<body>
-
-  
+<body>  
     <div class="alert alert-warning" role="alert" th:if="${account?.token_bool} == false" onclick="location.href='/account/resend/';">이메일을 인증해 주세요</div>
         
     <section class="py-5 text-center container">
@@ -46,8 +42,6 @@
             </div>
         </div>
     </section>
-
-
 </body>
 
 </html>
