@@ -25,7 +25,7 @@
 
             <div class="form-floating">
                 <label for="floatingPassword">비밀번호</label>
-                <input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호 수정하고싶노?"
+                <input type="password" class="form-control" id="floatingPassword" placeholder="*****************"
                     th:field="*{password}" disabled>
             </div>
             <div class="form-floating">
@@ -38,15 +38,12 @@
                 <input type="text" class="form-control" id="floatingInput" placeholder="이메일 입력" th:field="*{email}"
                     disabled>
             </div>
-            <!--
+
             <div class="form-floating">
-                <label for="floatingInput">권한</label>
-                <input type="text" class="form-control" id="floatingInput" placeholder="회원권한" th:field="*{authrites}"
-                    disabled>
+                <label for="floatingInput">회원 권한</label>
+                <span sec:authentication="principal.authorities"></span>
             </div>
-            -->
-            <button class="w-100 btn btn-lg btn-primary mb-1" type="submit">회원 정보 수정</button>
-            <a href="/" class="w-100 btn btn-lg btn-primary">취소</a>
+
         </form>
     </main>
 </body>

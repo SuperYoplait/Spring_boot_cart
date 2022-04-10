@@ -57,16 +57,11 @@ public class AccountController {
         return "account/Login";
     }
 
-    // 회원 정보 수정
+    // 회원 정보 보기
     @GetMapping("/info")
     public String Info_Update_GET(Model model, @CurrentUser Account account) {
         accountService.infoProcess(model, account.getId());
         return "account/Info";
-    }
-
-    @PostMapping("/info")
-    public String Info_Update_Post() {
-        return "";
     }
 
     // 회원 권한 수정

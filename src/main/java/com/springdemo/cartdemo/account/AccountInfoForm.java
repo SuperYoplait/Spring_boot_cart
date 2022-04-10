@@ -19,6 +19,4 @@ public class AccountInfoForm {
     private String name;
 
     private String email;
-
-    //private String auth;
 }

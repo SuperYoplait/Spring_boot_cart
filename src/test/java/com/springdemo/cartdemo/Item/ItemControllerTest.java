@@ -66,9 +66,11 @@ public class ItemControllerTest {
     void item_insert_true() throws Exception {
         String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
         String fileName = "imgFile";
-        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png");
-        //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png");
-        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png");
+        
+        //file path
+        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
+        //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png"); // laptop - junho
+        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
         
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
