@@ -33,7 +33,7 @@
                 <tbody>
                     <tr th:each=" row : ${cartlist}">
                         <td style=' vertical-align : middle;  text-align: center; '>
-                            <input type="checkbox" class="myCheck" name="checkedVal[]" th:value="${row.id}" th:attr="data-price=${row.price}" 
+                            <input type="checkbox" class="myCheck" name="checkedVal" th:value="${row.id}" th:attr="data-price=${row.price}" 
                                 style="vertical-align:middle">
                         </td>
                         <td style=' vertical-align : middle;  text-align: center; '>
