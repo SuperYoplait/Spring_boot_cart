@@ -3,14 +3,11 @@ package com.springdemo.cartdemo.payment;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.springdemo.cartdemo.account.Account;
 import com.springdemo.cartdemo.account.CurrentUser;
-import com.springdemo.cartdemo.cart.CartRepositroy;
 import com.springdemo.cartdemo.cartitem.CartItem;
 import com.springdemo.cartdemo.cartitem.CartItemRepository;
 
@@ -26,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 public class PaymentService {
 
     private final CartItemRepository cartItemRepository;
-    private final CartRepositroy cartRepository;
     private final PaymentRepositroy paymentRepositroy;
 
     public void paymentProcess(@CurrentUser Account account, Model model, List<String> checkedVal) {
