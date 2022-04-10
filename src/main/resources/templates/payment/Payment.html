@@ -15,13 +15,42 @@
     <div class = "container">
     
  
-        <div class = "py-5 text-center" th:if="${error != null}">
+        <div class = "py-5 text-center" th:if="${error == null}">
             <p class="lead">장봐요</p>
             
-            <p class="lead">결제가 완료되었습니다.</p>
+            <div class="alert alert-success" role="alert">
+                <h3 class="alert-heading">결제가 완료되었어요! :)</h3>
+                저희가 최대한 빨리 배송해 드릴게요!
+                <br>
+                
+                <hr>
+                주문번호는
+                <span th:text="${code}"></span>
+                입니다!
+                <div th:if="${itemcnt} == 0">
+                    <span th:text="${payitem}"></span> 가 결제되었어요. 
+
+                </div>
+                <div th:if="${itemcnt} > 1">
+                    <span th:text="${payitem}"></span> 외 <span th:text="${itemcnt}"></span>개가 결제 되었습니다.
+
+                </div>
+                 
+                <br>
+                총 주문금액 :
+                <span th:text="${price}"></span>
+                원
+              </div>
+
+              
+            <div>
+                <a class="btn btn-outline-info" th:href="@{/}">
+                    홈으로 돌아가기
+                </a>
+                </div>
         </div>    
 
-        <div class = "py-5 text-center" th:if="${error == null}">
+        <div class = "py-5 text-center" th:if="${error != null}">
             <p class="lead">장봐요</p>
             <h2>결제에 문제가 발생했어요 :(</h2>
 
