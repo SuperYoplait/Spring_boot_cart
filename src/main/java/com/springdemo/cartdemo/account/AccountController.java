@@ -112,7 +112,7 @@ public class AccountController {
     }
 
     @GetMapping("/signupcheck")
-    public String token_check(Model model, @RequestParam String token, @RequestParam Long userid) {
+    public String token_check(Model model, @RequestParam String token, @RequestParam String userid) {
         accountService.signupProcess(model, token, userid);
         return "account/tokencheck";
     }

@@ -31,7 +31,10 @@ public class accountControllerTest {
     private AccountRoleRepository accountRoleRepository;
 
     @Autowired
-    private AccountService accountservice;
+    private AccountRepositroy accountRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     @BeforeEach //Test ID Login
     private void beforeEach_signup() throws Exception {
@@ -41,7 +44,7 @@ public class accountControllerTest {
         signUpForm.setPassword("1111");
         signUpForm.setName("test123");
         signUpForm.setEmail("test@test.com");
-        accountservice.signUp(signUpForm);
+        accountService.signUp(signUpForm);
         System.out.println("BEFORE===========================================================\n\n");
     }
 
@@ -111,21 +114,43 @@ public class accountControllerTest {
     @Test
     public void Login_fail() throws Exception {
         mockMvc.perform(get("/account/login?error")
-                .param("username", "test")
+                .param("username", "test123")
                 .param("password", "1234")
                 .with(csrf()))
                 .andExpect(status().isOk());
     }
 
+    
     @DisplayName("이메일 인증 - 성공")
     @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Email_pass() throws Exception {
+
+        
+        Account newAccount =  accountRepository.findByUserid("test123");
+
+        mockMvc.perform(get("/account/signupcheck")
+                .param("token", newAccount.getToken())
+                .param("userid", newAccount.getId().toString())
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("name"));
         
     }
     
     @DisplayName("이메일 인증 - 실패")
     @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Email_fail() throws Exception {
+
+        Account newAccount =  accountRepository.findByUserid("test123");
+        mockMvc.perform(get("/account/signupcheck")
+                .param("token", "aaa")
+                .param("userid", newAccount.getId().toString())
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"));
+        
         
     }
 
