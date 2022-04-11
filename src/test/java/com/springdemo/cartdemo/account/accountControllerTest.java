@@ -135,7 +135,6 @@ public class accountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("name"));
-        
     }
     
     @DisplayName("이메일 인증 - 실패")
@@ -150,8 +149,6 @@ public class accountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"));
-        
-        
     }
 
 }
