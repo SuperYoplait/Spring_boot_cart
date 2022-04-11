@@ -74,6 +74,13 @@
                 console.log("error");
             }
         });
-        alert('상품이 장바구니에 담겼습니다!');
+        if(!confirm("상품이 장바구니에 담겼습니다. \n 장바구니로 이동 하시겠습니까?")){
+            //취소 버튼
+            window.location.href="/item/detail/?id=" + itemId;
+        }else{
+            // 확인 버튼
+            window.location.href="/cart/my-cart";
+        }
+        
     }
 </script>
