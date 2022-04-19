@@ -35,22 +35,47 @@ public class accountControllerTest {
     @Autowired
     private AccountRepositroy accountRepository;
 
+    @Autowired
+    private AccountService accountService;
+
     @BeforeEach //Test ID Login
-    private void beforeEach_login() throws Exception {
+    private void beforeEach_signup() throws Exception {
         System.out.println("BEFORE===========================================================\n\n");
-        mockMvc.perform(post("/account/sign-up")
-                .param("userid", "test123")
-                .param("password", "1111")
-                .param("name", "test name")
-                .param("email", "jangbayooffcial@gmail.com")
-                .with(csrf()))
-                .andExpect(status().is3xxRedirection());
+        AccountSignUpForm signUpForm = new AccountSignUpForm();
+        signUpForm.setUserid("test123");
+        signUpForm.setPassword("1111");
+        signUpForm.setName("test123");
+        signUpForm.setEmail("test@test.com");
+        accountService.signUp(signUpForm);
         System.out.println("BEFORE===========================================================\n\n");
     }
 
     @AfterEach
     private void AfterEach(){
         System.out.println("AFTER============================================================\n\n");
+    }
+
+    @DisplayName("권한 수정")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void auth_update_test() throws Exception{
+        String userid = "test123";
+
+        List<AccountRole> roles = accountRoleRepository.findAll();
+
+        List<Long> rolesValue = new ArrayList<>();
+
+        for (AccountRole role : roles){
+            rolesValue.add(role.getId());
+        }
+
+        mockMvc.perform(post("/account/auth-update/" + userid)
+                        .content(rolesValue.toString())
+                        .contentType("application/json")
+                        .param("userid", userid)
+                        .with(csrf())
+                        )
+                        .andExpect(status().isOk());
     }
 
     @DisplayName("회원가입 - 정상")
@@ -112,7 +137,6 @@ public class accountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("name"));
-        
     }
     
     @DisplayName("이메일 인증 - 실패")
@@ -127,30 +151,26 @@ public class accountControllerTest {
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"));
-        
-        
     }
 
-    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @DisplayName("권한 수정")
+    @DisplayName("회원 정보 조회")
     @Test
-    public void privateModify() throws Exception{
-        String userid = "test123";
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Account_info() throws Exception {
 
-        List<AccountRole> roles = accountRoleRepository.findAll();
-
-        List<Long> rolesValue = new ArrayList<>();
-
-        for (AccountRole role : roles){
-            rolesValue.add(role.getId());
-        }
-
-        mockMvc.perform(post("/account/auth-update/" + userid)
-                        .content(rolesValue.toString())
-                        .contentType("application/json")
-                        .param("userid", userid)
-                        .with(csrf())
-                        )
-                        .andExpect(status().isOk());
+        mockMvc.perform(get("/account/info")
+                .with(csrf()))
+                .andExpect(status().isOk());
     }
+
+    @DisplayName("회원 시큐리티 권환 확인")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Account_principal() throws Exception {
+
+        mockMvc.perform(get("/account/principal")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
 }

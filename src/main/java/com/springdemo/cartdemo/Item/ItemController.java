@@ -105,10 +105,4 @@ public class ItemController {
         itemService.insertProcess(itemInsertForm, account);
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping("/item-delete")
-    public String Goods_Delete() {
-        return "";
-    }
-
 }
