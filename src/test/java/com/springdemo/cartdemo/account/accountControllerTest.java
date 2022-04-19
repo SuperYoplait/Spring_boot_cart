@@ -151,4 +151,24 @@ public class accountControllerTest {
                 .andExpect(model().attributeExists("error"));
     }
 
+    @DisplayName("회원 정보 조회")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Account_info() throws Exception {
+
+        mockMvc.perform(get("/account/info")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
+    @DisplayName("회원 시큐리티 권환 확인")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Account_principal() throws Exception {
+
+        mockMvc.perform(get("/account/principal")
+                .with(csrf()))
+                .andExpect(status().isOk());
+    }
+
 }
