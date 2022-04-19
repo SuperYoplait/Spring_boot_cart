@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
-
-import static com.springdemo.cartdemo.Item.ItemController.ROOT;
-
 import java.util.List;
 
+import static com.springdemo.cartdemo.Item.ItemController.ROOT;
 import static com.springdemo.cartdemo.Item.ItemController.ITEM;
 
 @Controller
@@ -45,7 +43,6 @@ public class ItemController {
 
         Page<Item> ItemPagingList;
         if (!categorie.isEmpty()) {   
-            System.out.println("\n\n\n카테고리조회입니다.\n\n\n");         
             ItemPagingList = itemRepositroy.findByCategorieContaining(categorie, pageable);
 
         } else {
@@ -78,22 +75,26 @@ public class ItemController {
         if(account != null){
             List<AccountRole> roles = account.getRoles();
             for(AccountRole role : roles){
-                if(role.getRole().equals("ROLE_SELLER")){
+                if(role.getRole().equals("ROLE_SELLER") || role.getRole().equals("ROLE_ADMIN")){
                     itemService.new_item_process(model, id);
                     return "item/item-insert";
                 }
             }
-            System.out.println("\n\n 권한 없음");
-            return "redirect:/item/list";
+            return "redirect:/item/list"; //로그인은 되어 있지만 권한은 안가지고 있음.
         }
-        else{
-            System.out.println("\n\n 로그인 먼저 진행 해야함");
-            return "redirect:/login";
-        }
+        else
+            return "redirect:/login"; //로그인이 안되어 있는 경우.
     }
 
     @PostMapping("/item-add")
     public String item_add_post(ItemForm itemForm, MultipartFile imgFile, Model model) throws Exception {
+        if (itemForm != null) {
+            if (itemForm.getName().length() < 5 || itemForm.getName().length() > 200 // 상품명 미달 or 상품 설명 미달 or 상품가격, 갯수가 없을 때
+                    || itemForm.getContext().length() < 5 || itemForm.getPrice() == null // th:object를 사용할 수 없으니 상품 Form의 등록 조건확인.
+                    || itemForm.getCount() == null) {
+                return "redirect:/item/item-add";
+            }
+        }
         Item newItem = itemService.update_process(itemForm, imgFile);
         return "redirect:/item/detail/" + newItem.getId();
     }

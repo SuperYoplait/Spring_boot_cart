@@ -36,9 +36,6 @@ public class CartService {
                 temp_list_form.setOption(item.getItem().getOption());
                 temp_list_form.setPrice(item.getItem().getPrice());
                
-                
-                
-
                 view_cartlist.add(temp_list_form);
             }
             model.addAttribute("cartlist", view_cartlist);

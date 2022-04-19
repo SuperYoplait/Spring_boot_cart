@@ -65,6 +65,7 @@ public class ItemService {
         File saveFile = new File(projectPath, imgName);
         imgFile.transferTo(saveFile);
         Item newItem;
+
         if (itemForm.getId() == null) {
             newItem = Item.builder()
                     .id(null)
@@ -88,23 +89,15 @@ public class ItemService {
                     .imgPath("/files/" + imgName)
                     .build();
         }
-        System.out.println("\n\n" + newItem + "\n\n");
         newItem.setSold(itemForm.isSold()); // 상품 판매 선택
         itemRepositroy.save(newItem);
 
         return newItem;
     }
 
-    public void insertProcess(ItemInsertForm itemInsertForm, Account account) {
-        System.out.println("\n\n" + account.getId());
-        System.out.println("\n\n" + account.getCart().getId());
-        
+    public void insertProcess(ItemInsertForm itemInsertForm, Account account) {        
         Optional<Cart> addCart = cartRepositroy.findById(account.getCart().getId());
-        System.out.println("\n\n\n\n CartItemID" + account.getCart().getId());
-
         Optional<Item> serchItem = itemRepositroy.findById(itemInsertForm.getItemId());
-        System.out.println("\n\n\n\n serchItem" + serchItem);
-
         Optional<CartItem> cartItem = cartitemRepositroy.findByItemId(itemInsertForm.getItemId());
 
         Long temp_sum_price = 0L;

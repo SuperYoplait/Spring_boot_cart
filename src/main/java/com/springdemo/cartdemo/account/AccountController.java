@@ -30,7 +30,6 @@ public class AccountController {
 
     @InitBinder("accountSignUpForm")
     public void InitBinder(WebDataBinder webDataBinder) {
-        System.out.println("\n바인딩 ------- 바인딩\n");
         webDataBinder.addValidators(AccountSignUpValidator);
     }
 
@@ -43,7 +42,6 @@ public class AccountController {
 
     @PostMapping("/sign-up")
     public String SignUp_POST(@Valid AccountSignUpForm accountSignUpForm, Errors errors, Model model) {
-        System.out.println("\n\n" + errors.getAllErrors());
         if (errors.hasErrors()) {
             return "account/SignUp";
         }

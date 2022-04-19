@@ -18,7 +18,7 @@ public class ItemForm {
     @NotBlank
     private Long id;
 
-    @Length(min = 5, max = 400)
+    @Length(min = 5, max = 200)
     private String name;
 
     private String categorie;
