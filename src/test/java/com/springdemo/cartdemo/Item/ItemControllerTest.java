@@ -6,7 +6,7 @@ import static com.springdemo.cartdemo.Item.ItemController.ITEM;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -60,40 +60,69 @@ public class ItemControllerTest {
         System.out.println("AFTER============================================================\n\n");
     }
 
-    @DisplayName("상품등록 - 정상")
+    //아이템 등록 실패
+    @DisplayName("상품등록 - 실패")
     @Test
-    void item_insert_true() throws Exception {
-        String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
+    void item_insert_fail() throws Exception {
         String fileName = "imgFile";
         
         //file path
-        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
+        //File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
         //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png"); // laptop - junho
-        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
+        File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
         
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        for(int i = 0; i<10; i++){
-            mockMvc.perform(
+
+        mockMvc.perform(
                 multipart("/item/item-add").file(image)
-                .param("name","과일 test" + (i+1))
-                .param("context","과일 상품 설명 : " + (i+1))
-                .param("price","10000")
-                .param("count","10")
-                .param("categorie", array[0])
-                .param("sold","true")
-                .with(csrf()))
-                .andExpect(status().is3xxRedirection());
-        }
+                        .param("name", "test")
+                        .param("context", "과일 상품 설명 : " )
+                        .param("price", "10000")
+                        .param("count", "10")
+                        .param("categorie", "fruit")
+                        .param("sold", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/item/item-add"));
     }
+
+    @DisplayName("상품등록 - 정상")
+    @Test
+    void item_insert_true() throws Exception {
+        //String[] array = {"fruit" , "greens" , "milk" , "instant" , "beverage" , "seasoning" , "snacks" , "infant"};
+        String fileName = "imgFile";
+        
+        //file path
+        //File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
+        //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png"); // laptop - junho
+        File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
+        
+        MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
+        
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        mockMvc.perform(
+                multipart("/item/item-add").file(image)
+                        .param("name", "과일 test")
+                        .param("context", "과일 상품 설명 : " )
+                        .param("price", "10000")
+                        .param("count", "10")
+                        .param("categorie", "fruit")
+                        .param("sold", "true")
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    
 
     @DisplayName("상품장바구니 담기 - 정상")
     @Test
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     void item_insert_cart_pass() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println("\n\nTEST============================================================\n\n");
+        
         ItemInsertForm itemInsertForm = ItemInsertForm.builder()
                 .itemId(1L)
                 .cnt(1L)
@@ -106,5 +135,15 @@ public class ItemControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(authenticated().withUsername("test123"));
+    }
+
+
+    @DisplayName("상품 보기 - 정상")
+    @Test
+    public void Item_detail_pass() throws Exception {
+        mockMvc.perform(get("/item/detail")
+                .param("id", "1")
+                .with(csrf()))
+                .andExpect(status().isOk());
     }
 }
