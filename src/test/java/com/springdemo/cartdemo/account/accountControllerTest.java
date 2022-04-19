@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import org.junit.jupiter.api.BeforeEach;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-@ActiveProfiles("dev")
+//@ActiveProfiles("dev")
 public class accountControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -148,6 +149,32 @@ public class accountControllerTest {
         mockMvc.perform(get("/account/signupcheck")
                 .param("token", "aaa")
                 .param("userid", newAccount.getId().toString())
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"));
+    }
+    @DisplayName("이메일 인증메일 발송 - 성공")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Email_send_pass() throws Exception {
+
+        Account newAccount =  accountRepository.findByUserid("test123");
+        newAccount.setTime(LocalDateTime.of(1999, 1, 1, 1, 1, 1));
+        mockMvc.perform(get("/account/resend_email")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("pass"));
+    }
+
+    @DisplayName("이메일 인증메일 발송 - 실패")
+    @Test
+    @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    public void Email_send_fail() throws Exception {
+
+        Account newAccount =  accountRepository.findByUserid("test123");
+        newAccount.setTime(LocalDateTime.now());
+        
+        mockMvc.perform(get("/account/resend_email")
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"));
