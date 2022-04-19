@@ -65,6 +65,7 @@ public class ItemService {
         File saveFile = new File(projectPath, imgName);
         imgFile.transferTo(saveFile);
         Item newItem;
+
         if (itemForm.getId() == null) {
             newItem = Item.builder()
                     .id(null)
