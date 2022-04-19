@@ -43,7 +43,6 @@ public class AccountService implements UserDetailsService {
         cartRepositroy.save(newCart);
 
         accountRole.ifPresent(role -> {
-
             AccountRole ROLE_USER = AccountRole.builder()
                     .id(role.getId())
                     .rolename(role.getRolename())
@@ -63,9 +62,7 @@ public class AccountService implements UserDetailsService {
 
             newAccount.setTokeninit();
             newAccount.setCart(newCart);
-            System.out.println("\n\n" + newAccount.getCart().getId());
             accountRepository.save(newAccount);
-
         });
 
     }
@@ -75,11 +72,8 @@ public class AccountService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String idOrEmail) throws UsernameNotFoundException {
         Account account = new Account();
-        // System.out.println("\n\n" + idOrEmail + "\n\n");
-
         // userid 또는 email 로 login
         account = accountRepository.findByUserid(idOrEmail);
-        // System.out.println("\n\n" + account.getUserid() + "\n\n");
 
         if (account == null) {
             account = accountRepository.findByEmail(idOrEmail);
@@ -132,10 +126,7 @@ public class AccountService implements UserDetailsService {
     public void signupProcess(Model model, String token, String userid) { // 이메일 인증 프로세스
         if (userid != null) {
             List<Long> auth = new ArrayList<>() { //임시 사용자가 이메일 인증 했을 때 권한
-                {
-                    add(1L);
-                    add(2L);
-                }
+                {    add(1L);add(2L);   }
             };
             List<AccountRole> roles = accountRoleRepository.findByIdIn(auth);
 
@@ -158,7 +149,6 @@ public class AccountService implements UserDetailsService {
                 model.addAttribute("name", newAccount.getName());
                 model.addAttribute("id", newAccount.getId());
                 model.addAttribute("pass", "pass");
-                System.out.println("인증완료");
             } else
                 model.addAttribute("error", "worng token!");
 

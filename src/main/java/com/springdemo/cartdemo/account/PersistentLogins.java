@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 public class PersistentLogins {
-
     @Id
     @Column(length = 64)
     private String series;

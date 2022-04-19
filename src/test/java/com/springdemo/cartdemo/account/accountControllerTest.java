@@ -58,15 +58,11 @@ public class accountControllerTest {
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void auth_update_test() throws Exception{
         String userid = "test123";
-
         List<AccountRole> roles = accountRoleRepository.findAll();
-
         List<Long> rolesValue = new ArrayList<>();
-
         for (AccountRole role : roles){
             rolesValue.add(role.getId());
         }
-
         mockMvc.perform(post("/account/auth-update/" + userid)
                         .content(rolesValue.toString())
                         .contentType("application/json")
@@ -125,8 +121,6 @@ public class accountControllerTest {
     @Test
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Email_pass() throws Exception {
-
-        
         Account newAccount =  accountRepository.findByUserid("test123");
 
         mockMvc.perform(get("/account/signupcheck")
@@ -141,7 +135,6 @@ public class accountControllerTest {
     @Test
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Email_fail() throws Exception {
-
         Account newAccount =  accountRepository.findByUserid("test123");
         mockMvc.perform(get("/account/signupcheck")
                 .param("token", "aaa")
@@ -155,7 +148,6 @@ public class accountControllerTest {
     @Test
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Account_info() throws Exception {
-
         mockMvc.perform(get("/account/info")
                 .with(csrf()))
                 .andExpect(status().isOk());
@@ -165,7 +157,6 @@ public class accountControllerTest {
     @Test
     @WithUserDetails(value = "test123", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     public void Account_principal() throws Exception {
-
         mockMvc.perform(get("/account/principal")
                 .with(csrf()))
                 .andExpect(status().isOk());
