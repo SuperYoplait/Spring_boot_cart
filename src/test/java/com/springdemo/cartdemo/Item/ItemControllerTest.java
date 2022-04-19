@@ -67,9 +67,9 @@ public class ItemControllerTest {
         String fileName = "imgFile";
         
         //file path
-        //File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
+        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
         //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png"); // laptop - junho
-        File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
+        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
         
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         
@@ -95,9 +95,9 @@ public class ItemControllerTest {
         String fileName = "imgFile";
         
         //file path
-        //File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
+        File file = new File("D:/gitproject/Spring_boot_cart/src/main/resources/static/img/images.png"); //home desk top - dongbin
         //File file = new File("D:/spring_test/cartdemo/src/main/resources/static/img/images.png"); // laptop - junho
-        File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
+        //File file = new File("/Users/macbookair/Documents/GitHub/Spring_boot_cart/src/main/resources/static/img/images.png"); // macbook air - dongbin
         
         MockMultipartFile image = new MockMultipartFile(fileName, new FileInputStream(file));
         

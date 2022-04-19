@@ -80,7 +80,7 @@ public class accountControllerTest {
     @Test
     public void SignupForm_pass() throws Exception {
         mockMvc.perform(post("/account/sign-up")
-                .param("userid", "test123")
+                .param("userid", "test1234")
                 .param("password", "1111")
                 .param("name", "test name")
                 .param("email", "jangbayooffcial@gmail.com")
@@ -92,7 +92,7 @@ public class accountControllerTest {
     @Test
     public void SignupForm_fail() throws Exception {
         mockMvc.perform(post("/account/sign-up")
-                .param("userid", "test12")
+                .param("userid", "test1234")
                 .param("password", "1")
                 .param("name", "test name")
                 .param("email", "jangbayooffcial@gmail.com")
