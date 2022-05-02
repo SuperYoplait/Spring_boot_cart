@@ -12,15 +12,15 @@
 
 <body>
     <main class="container">
-        <div class = "py-5 text-center" th:if="${error}">
+        <div class="py-5 text-center" th:if="${error}">
             <p class="lead">장봐요 이메일 확인</p>
             <div class="alert alert-danger" role="alert">
                 이메일 확인 링크가 정확하지 않습니다.
             </div>
         </div>
-    
-    
-        <div class = "py-5 text-center" th:if="${error == null}">
+
+
+        <div class="py-5 text-center" th:if="${error == null}">
             <p class="lead">장봐요 이메일 확인</p>
             <h2>
                 이메일 인증 완료
@@ -29,8 +29,7 @@
             </h2>
             <button class="btn btn-outline-success" type="button" onclick="location.href='/';">메인으로 가기</button>
         </div>
-      </main>
+    </main>
 </body>
 
-</html><!-- 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+</html>
