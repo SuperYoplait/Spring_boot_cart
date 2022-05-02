@@ -15,8 +15,8 @@ public interface AccountRoleRepository extends JpaRepository<AccountRole,Long> {
     // where user.nickname = 'jang';
 
     
-    @Query(value = "select id from role where id = :id", nativeQuery = true)
-    List<Long> getRoles(Long id);
+  /*   @Query(value = "select id from role where id = :id", nativeQuery = true)
+    List<Long> getRoles(Long id); */
 
     //체크한 권한
     List<AccountRole> findByIdIn(List<Long> roleIds);

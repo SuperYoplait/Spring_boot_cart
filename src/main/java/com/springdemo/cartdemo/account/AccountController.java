@@ -102,7 +102,7 @@ public class AccountController {
             return "account/emailcheck";
         } else if(account.canSendConfirmEmail()) {
             model.addAttribute("pass", account.getEmail() + "로 인증코드가 다시 한번 전송되었어요! :)");
-            accountService.sendSignUpConfirmEmail(account);
+            accountService.sendSignUpConfirmEmailConsole(account);
             return "account/emailcheck";
         }
 
