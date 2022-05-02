@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,6 +12,8 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Component;
 
 
+
+//@Profile("local")
 @Component
 public class TempMailSender implements JavaMailSender {
 

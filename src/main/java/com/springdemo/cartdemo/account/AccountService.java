@@ -1,13 +1,20 @@
 package com.springdemo.cartdemo.account;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import com.springdemo.cartdemo.cart.Cart;
 import com.springdemo.cartdemo.cart.CartRepositroy;
 
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -30,7 +37,8 @@ public class AccountService implements UserDetailsService {
     private final AccountRepositroy accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final AccountRoleRepository accountRoleRepository;
-    private final TempMailSender tempMailSender; // 가짜빈
+    //private final TempMailSender tempMailSender; // 가짜빈
+    private final JavaMailSender javaMailSender; // 메일 발송
 
     // 회원 가입
     public void signUp(AccountSignUpForm AccountSignUpForm) {
@@ -58,7 +66,17 @@ public class AccountService implements UserDetailsService {
                     .email(AccountSignUpForm.getEmail())
                     .roles(roles)
                     .build();
-            mailSend(newAccount.getEmail(), newAccount.getName(), newAccount.getToken(), newAccount.getId());
+
+            mailSendCosole(newAccount.getEmail(), newAccount.getName(), newAccount.getToken(), newAccount.getId());
+            try {
+                sendMail(newAccount.getEmail(), newAccount.getName(), newAccount.getToken(), newAccount.getId()); // 실제
+                                                                                                                  // 메일
+                                                                                                                  // 전송
+                System.out.println("됐니?");
+            } catch (MessagingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             newAccount.setTokeninit();
             newAccount.setCart(newCart);
@@ -98,8 +116,10 @@ public class AccountService implements UserDetailsService {
         context.setAuthentication(token);
     }
 
-    public void mailSend(String email, String username, String token, Long useridval) { // 보낼 이메일이름과 토큰 받고 유저 고유번호 받아야함.
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+    public void mailSendCosole(String email, String username, String token, Long useridval) { // 보낼 이메일이름과 토큰 받고 유저 고유번호
+                                                                                              // 받아야함.
+
+        /* SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("장봐요 인증메일입니다.");
@@ -115,18 +135,31 @@ public class AccountService implements UserDetailsService {
                 .toString());
 
         tempMailSender.send(simpleMailMessage);
+ */
     }
 
-    public void sendSignUpConfirmEmail(Account account) {
-        mailSend("ggb04212@naver.com", account.getName(), // 보낸사람이메일
+    public void sendSignUpConfirmEmailConsole(Account account) {
+        mailSendCosole("ggb04212@naver.com", account.getName(), // 보낸사람이메일
                 account.getToken(), account.getId()); // 메일 보내고
+
+        try {
+            sendMail(account.getEmail(), account.getName(), account.getToken(), account.getId()); // 실제 메일 전송
+            System.out.println("됐니?");
+        } catch (MessagingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         account.setEmailTokenSendtime(); // 보낸시간 찍고
     }
 
     public void signupProcess(Model model, String token, String userid) { // 이메일 인증 프로세스
         if (userid != null) {
-            List<Long> auth = new ArrayList<>() { //임시 사용자가 이메일 인증 했을 때 권한
-                {    add(1L);add(2L);   }
+            List<Long> auth = new ArrayList<>() { // 임시 사용자가 이메일 인증 했을 때 권한
+                {
+                    add(1L);
+                    add(2L);
+                }
             };
             List<AccountRole> roles = accountRoleRepository.findByIdIn(auth);
 
@@ -179,4 +212,29 @@ public class AccountService implements UserDetailsService {
         user.setRoles(accountRoles);
         return accountRepository.save(user);
     }
+
+    public void sendMail(String email, String username, String token, Long useridval) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(email); // 받는사람
+            helper.setFrom("jangbayoofficial@gmail.com"); // 보내는 사람
+            helper.setSubject("장봐요 인증메일 입니다 :)");
+            helper.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>") // 메일내용
+                    .append(username)
+                    .append("님! 장봐요에 가입해주셔서 감사합니다!")
+                    .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+                    .append("<a href='http://localhost:8080/account/signupcheck?token=")
+                    .append(token)
+                    .append("&userid=")
+                    .append(useridval)
+                    .append("' target='_blenk'>이메일 인증 확인</a>")
+                    .toString());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        javaMailSender.send(message);
+    }
+
 }
